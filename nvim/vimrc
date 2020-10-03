@@ -38,6 +38,7 @@ set linebreak
 set noswapfile
 
 set number
+set cursorline
  
 set hlsearch
 set incsearch
@@ -92,3 +93,10 @@ map Y y$
 
 "clear prompt also clears highlight
 map ; :noh \| echo ""<CR> 
+
+" folding
+nnoremap <C-space> za
+
+" cursorline and cursorcolumn
+map <leader>- :set invcursorline<CR>
+map <leader>\ :set invcursorcolumn<CR>
