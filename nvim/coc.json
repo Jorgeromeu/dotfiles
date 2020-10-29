@@ -1,0 +1,57 @@
+{
+
+	"diagnostic.warningSign":"!",
+
+
+	"explorer.width": 30,
+	"explorer.icon.enableNerdfont": true,
+	"explorer.previewAction.onHover": false,
+  
+	"explorer.keyMappings.global": {
+    	"<cr>": ["expandable?", "expand", "open"],
+    	"v": "open:vsplit",
+    	"s": "open:split",
+    	"t": "open:tab"
+	},
+
+	"git.branchCharacter":"↱",
+	"git.changedDecorator":" ○",
+	"git.stagedDecorator":" ●",
+	"git.untrackedDecorator":" u",
+
+
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+					}
+            }
+        },
+		"hdlChecker": {
+            "command": "hdl_checker",
+            "args": [
+                "--lsp"
+            ],
+            "filetypes": [
+                "vhdl",
+                "verilog",
+                "systemverilog"
+            ]
+        }
+    }
+}
