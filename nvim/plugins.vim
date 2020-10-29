@@ -8,6 +8,8 @@ Plug 'sirver/UltiSnips'
 Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/restore_view.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'liuchengxu/vim-which-key'
 
 " aesthetics
 Plug 'itchyny/lightline.vim'
@@ -27,7 +29,9 @@ autocmd FileType vhdl setlocal commentstring=--\ %s
 autocmd FileType cpp setlocal commentstring=-//\ %s
 
 " Goyo
-map <C-f> :Goyo<CR>
+map <C-g> :Goyo<CR>
+
+nnoremap <C-f> :Files<CR>
 
 " UltiSnips
 let g:UltiSnipsSnippetDirectories=[$HOME.'/dotfiles/nvim/runtime/snips']
@@ -47,3 +51,6 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 let g:vim_markdown_autowrite = 1
 
 " Fugitive
+map <leader>ga :Git add .
+map <leader>gco :Git checkout 
+map <leader>gs :Git stash 

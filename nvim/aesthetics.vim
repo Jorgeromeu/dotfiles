@@ -16,8 +16,10 @@ let g:lightline = {
     \ 'colorscheme': 'nord',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'cocgit', 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-    \ },
+    \             [ 'cocgit', 'cocstatus', 'readonly', 'filename', 'modified', 'pwd' ] ],
+	\	
+	\   'right': [['bufnum'], [ 'fileformat', 'fileencoding', 'filetype' ], ['absolutepath']]
+	\	},
     \ 'component_function': {
 	\   'cocstatus': 'coc#status',
 	\   'cocgit': 'CocGit'
@@ -30,3 +32,4 @@ function! CocGit() abort
   " return blame
   return winwidth(0) > 10 ? blame : ''
 endfunction
+
