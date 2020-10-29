@@ -8,6 +8,7 @@ colo nord
 
 let g:nord_bold = 1
 let g:nord_italic = 1
+let g:nord_italic_comments = 1
 let g:nord_underline = 1
 
 set noshowmode
@@ -15,9 +16,17 @@ let g:lightline = {
     \ 'colorscheme': 'nord',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+    \             [ 'cocgit', 'cocstatus', 'readonly', 'filename', 'modified' ] ]
     \ },
     \ 'component_function': {
-    \   'gitbranch': 'gitbranch#name'
+	\   'cocstatus': 'coc#status',
+	\   'cocgit': 'CocGit'
     \ },
     \ }
+
+
+function! CocGit() abort
+  let blame = get(g:, 'coc_git_status', '')
+  " return blame
+  return winwidth(0) > 10 ? blame : ''
+endfunction

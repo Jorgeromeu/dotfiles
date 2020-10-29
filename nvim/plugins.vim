@@ -3,9 +3,11 @@ call plug#begin('~/dotfiles/nvim/runtime/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
 Plug 'sirver/UltiSnips'
 Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/restore_view.vim'
 
 " aesthetics
 Plug 'itchyny/lightline.vim'
@@ -22,6 +24,7 @@ call plug#end()
 
 " commentary
 autocmd FileType vhdl setlocal commentstring=--\ %s
+autocmd FileType cpp setlocal commentstring=-//\ %s
 
 " Goyo
 map <C-f> :Goyo<CR>
@@ -42,3 +45,5 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_no_extensions_in_markdown = 1
 let g:vim_markdown_autowrite = 1
+
+" Fugitive
