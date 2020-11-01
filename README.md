@@ -7,4 +7,4 @@ This repository contains my configuration for:
 - tmux
 - lf
 
-![screenshot](/info/screenshot.png)
+![screenshot](/info/terminal.png)
