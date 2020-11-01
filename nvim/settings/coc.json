@@ -53,5 +53,6 @@
                 "systemverilog"
             ]
         }
-    }
+    },
+    "git.enableGutters": false
 }
