@@ -16,7 +16,6 @@ let &packpath=&runtimepath
 " Plugins
 " ==================
 call plug#begin('~/dotfiles/nvim/runtime/plugged')
-Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/restore_view.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'

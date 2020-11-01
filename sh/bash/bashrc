@@ -1,0 +1,19 @@
+# prompt
+export PS1="\[$(tput bold)\]\[$(tput setaf 5)\]\w\[$(tput sgr0)\] # \[$(tput sgr0)\]"
+
+# vi mode
+set -o vi
+bind -m vi-insert 'Control-l: clear-screen'
+bind -m vi-insert '"jj": vi-movement-mode'
+
+# history
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+shopt -s checkwinsize
+
+# aliases
+. ~/dotfiles/sh/aliases.sh
+

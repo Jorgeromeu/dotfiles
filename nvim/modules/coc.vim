@@ -21,6 +21,7 @@ else
   set signcolumn=yes
 endif
 
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -123,5 +124,8 @@ nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 
 " Do default action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+
+" yank
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 nmap <space>e :CocCommand explorer<CR>

@@ -16,8 +16,8 @@ let &packpath=&runtimepath
 " Plugins
 " ==================
 call plug#begin('~/dotfiles/nvim/runtime/plugged')
-Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/restore_view.vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -30,6 +30,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+
 
 so ~/dotfiles/nvim/modules/commentary.vim
 so ~/dotfiles/nvim/modules/ultisnips.vim
@@ -46,4 +47,4 @@ so ~/dotfiles/nvim/modules/coc.vim
 
 so ~/dotfiles/nvim/settings/general.vim
 so ~/dotfiles/nvim/settings/keys.vim
-
+so ~/dotfiles/nvim/settings/general.vim

@@ -21,8 +21,8 @@ map <C-s> :wa<CR>
 map <leader>r :so ~/.vimrc<CR> 
 
 " swap lines
-map <leader>k :norm ddkkp<CR>
-map <leader>j :norm ddp<CR>
+map K :norm ddkkp<CR>
+map J :norm ddp<CR>
 
 " fast indenting
 map <S-H> <<

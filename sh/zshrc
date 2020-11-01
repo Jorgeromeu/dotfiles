@@ -18,8 +18,7 @@ SAVEHIST=1000000
 HISTFILE=~/.zshhistory
 
 # aliases
-. ~/dotfiles/sh/aliases
-
+source ~/dotfiles/sh/aliases
 
 # auto ls
 function chpwd() {
@@ -27,6 +26,15 @@ function chpwd() {
     ls 
 }
 
+fzfedit () {
+	nvim $(fzf)
+}
+bindkey -s '^f' 'fzfedit\n'
+
+cdup () {
+	cd ..
+}
+bindkey -s '^k' 'cdup\n'
 
 # tab-complete
 autoload -U compinit
@@ -37,7 +45,6 @@ compinit
 _comp_options+=(globdots)		# Include hidden files.
 
 bindkey -v '^?' backward-delete-char
-
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
