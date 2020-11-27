@@ -26,15 +26,6 @@ function chpwd() {
     ls 
 }
 
-fzfedit () {
-	nvim $(fzf)
-}
-bindkey -s '^f' 'fzfedit\n'
-
-cdup () {
-	cd ..
-}
-bindkey -s '^k' 'cdup\n'
 
 # tab-complete
 autoload -U compinit

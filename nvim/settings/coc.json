@@ -2,29 +2,17 @@
 
 	"diagnostic.warningSign":"!",
 
-
-	"explorer.width": 30,
-	"explorer.icon.enableNerdfont": true,
-	"explorer.previewAction.onHover": false,
-  
-	"explorer.keyMappings.global": {
-    	"<cr>": ["expandable?", "expand", "open"],
-    	"v": "open:vsplit",
-    	"s": "open:split",
-    	"t": "open:tab"
-	},
-
-	"git.branchCharacter":"↱",
-	"git.changedDecorator":" ○",
-	"git.stagedDecorator":" ●",
-	"git.untrackedDecorator":" u",
-
+	"git.changedDecorator": " *",
+	"git.stagedDecorator" :" s",
+	"git.untrackedDecorator": " u",
+	"git.conflictedDecorator" : " x",
 
     "languageserver": {
         "ccls": {
             "command": "ccls",
             "filetypes": [
                 "c",
+                "gas",
                 "cpp",
                 "objc",
                 "objcpp"
@@ -37,9 +25,8 @@
                 ".hg/"
             ],
             "initializationOptions": {
-                "cache": {
-                    "directory": "/tmp/ccls"
-					}
+                "cache": { "directory": "/tmp/ccls" },
+				"highlight": { "lsRanges" : true }
             }
         },
 		"hdlChecker": {

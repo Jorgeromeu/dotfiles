@@ -1,34 +1,62 @@
 " ==================
-" Runtime
+" Bloated
 " ==================
 " This configuration is the most bloated. It includes several plugins, many of
 " which are aesthetic / require external dependncies, the configuration breaks support
-" for vanilla vim, requries nvim (for correct functioning). This is the configuratio I 
-" use on my local machine
+" for vanilla vim, requries nvim (for correct functioning). 
+"
+" In order to function correctly, pynvim 
 
 " ==================
 " Runtime
 " ==================
-set runtimepath^=~/dotfiles/nvim/runtime runtimepath+=~/dotfiles/nvim/runtime/after runtimepath+=~/dotfiles/nvim/runtime/autoload 
+set runtimepath^=~/dotfiles/nvim/runtime runtimepath+=~/dotfiles/nvim/runtime/after runtimepath+=~/dotfiles/nvim/runtime/autoload
 let &packpath=&runtimepath
+
+" ==================
+" Settings
+" ==================
+
+so ~/dotfiles/nvim/settings/general.vim
+so ~/dotfiles/nvim/settings/keys.vim
+so ~/dotfiles/nvim/settings/functions.vim
 
 " ==================
 " Plugins
 " ==================
 call plug#begin('~/dotfiles/nvim/runtime/plugged')
+" vimscript
 Plug 'vim-scripts/restore_view.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
-Plug 'sirver/UltiSnips'
+
+" filetypes
 Plug 'plasticboy/vim-markdown'
-Plug 'junegunn/fzf.vim'
+Plug 'lervag/vimtex'
+Plug 'sheerun/vim-polyglot'
+
+" aesthetics
+Plug 'arcticicestudio/nord-vim'
+Plug 'enthudave/star_wars.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'arcticicestudio/nord-vim'
+
+" require dependencies
+Plug 'sirver/UltiSnips'  
+Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ptzz/lf.vim'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'puremourning/vimspector'
+
+" enhanced highlighting
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'calculuswhiz/vim-GAS-x86_64-highlighter'
 call plug#end()
 
 
@@ -40,11 +68,15 @@ so ~/dotfiles/nvim/modules/lightline.vim
 so ~/dotfiles/nvim/modules/goyo.vim
 so ~/dotfiles/nvim/modules/nord.vim
 so ~/dotfiles/nvim/modules/coc.vim
+so ~/dotfiles/nvim/modules/vimtex.vim
+so ~/dotfiles/nvim/modules/vimspector.vim
+so ~/dotfiles/nvim/modules/lf.vim
 
-" ==================
-" Settings
-" ==================
+" Filetype specific settings
+autocmd Filetype markdown call SetMD()
+function SetMD()
+	so ~/dotfiles/nvim/settings/prose.vim
+	set nonumber
+	set norelativenumber
+endfunction
 
-so ~/dotfiles/nvim/settings/general.vim
-so ~/dotfiles/nvim/settings/keys.vim
-so ~/dotfiles/nvim/settings/general.vim

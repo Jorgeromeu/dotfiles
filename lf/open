@@ -1,0 +1,8 @@
+# opening script
+cmd open ${{
+    case $(file --mime-type "$f" -bL) in
+        text/*|application/json) nvim "$f";;
+        video/*|image/*/application/pdf) xdg-open "$f";;
+        *) xdg-open "$f" ;;
+    esac
+}}

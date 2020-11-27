@@ -3,35 +3,33 @@
 " ==================
 
 set nocompatible
+
+" basic usability settings
 set hidden
 set wildmenu
-
-set laststatus=2
 set mouse=a
-
-syntax enable
+set laststatus=2
+set noswapfile
+set visualbell
+set lazyredraw
 filetype plugin on
+syntax enable
 
+" indentation settings
 set tabstop=4
 set shiftwidth=4
-set nostartofline
 set backspace=indent,eol,start
 
-" word wrap
-set formatoptions=l
-set breakindent
-set linebreak
-
-set noswapfile
-
+" line numbers
 set number
 set relativenumber
-set cursorline
- 
+
+" search
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
+" sensible splits
 set splitbelow
 set splitright

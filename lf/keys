@@ -1,0 +1,21 @@
+cmd mkdir ${{
+  printf "Directory Name: "
+  read ans
+  mkdir $ans
+}}
+
+cmd mkfile ${{
+  printf "File Name: "
+  read ans
+  touch $ans
+}}
+
+map +d mkdir
+map +f mkfile
+
+map . set hidden!
+map DD delete
+map <enter> open
+
+map x cut
+

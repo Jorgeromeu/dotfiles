@@ -1,6 +1,0 @@
-#!/bin/bash
-
-mkdir ~/.config/tmux
-touch ~/.config/tmux/tmux.conf
-
-echo "source \"~/dotfiles/tmux/tmux.conf\"" > ~/.config/tmux/tmux.conf

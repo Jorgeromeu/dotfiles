@@ -1,4 +1,0 @@
-set spell
-
-Goyo
-

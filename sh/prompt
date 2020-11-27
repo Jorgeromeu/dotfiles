@@ -8,10 +8,9 @@ zstyle ':vcs_info:git:*' formats '%B%F{yellow}[%b]%f'
 zstyle ':vcs_info:*' enable git
 
 git="\$vcs_info_msg_0_%b"
-
 err='%(?..%B%F{red}[%?]%f%b)'
-wd='%B%F{blue}%5~%f%b'
+wd='%B%F{blue}[%5~]%f%b'
 
-PROMPT="${wd} $ "
-RPROMPT="${err}${git}"
+PROMPT="${err}${git}${wd}${pid} "
+# RPROMPT="${err}${git}"
 
