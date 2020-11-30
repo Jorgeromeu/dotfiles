@@ -1,6 +1,2 @@
 # vim:ft=conf
-source settings
-source open
-source keys
-
-
+source ~/dotfiles/lf/settings

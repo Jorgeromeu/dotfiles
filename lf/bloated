@@ -1,6 +1,4 @@
 # vim:ft=conf
-source ~/dotfiles/lf/open
-source ~/dotfiles/lf/keys
 source ~/dotfiles/lf/settings
 
 # preview

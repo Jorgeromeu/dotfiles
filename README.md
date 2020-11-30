@@ -1,14 +1,22 @@
-# Jorgeromeu - Dotfiles
+# dotfiles
+
+This configuration contains my config files for a collection of programs but mainly **vim**, **tmux** and **zsh**.
 
 ![screenshot](/info/terminal.png)
 
-## Vim/Neovim
+## TODO
 
-This repository contains three different configurations. Their respective vimrc's are:
+This repository is constantly evolving, the following need to be implemented/fixed:
 
-- `nvim/bloated.vim` my main configuration which I use on my local machine. 
-- `nvim/minimal.vim` a stripped down version which maintains some small plugins with no dependencies 
-- `nvim/hybrid.vim` a barebones vanilla configuration with zero plugins
+- **shell**
+- add a basic bashrc (for systems whre installing zsh is a hassle)
+- re-organize the shell folder
 
-Changing the configuration can be done by sourcing the correct file in the system vimrc file. The repository includes the script `changeconfig` for automating this
+- **vim**
+- ignore plugged in repo 
+- ignore view history in repo
+- add better support for differentiating prose and code
+- simplify configuration (prune plugins)
 
+- **tmux**
+- look into [tmux better mouse mode](https://github.com/NHDaly/tmux-better-mouse-mode)
