@@ -1,5 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =1
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/jorge/notes/_includes'
+let g:netrw_dirhist_3='/home/jorge/repos'
+let g:netrw_dirhist_2='/home/jorge/repos/mcsite'
 let g:netrw_dirhist_1='/home/jorge/notes/_layouts'
 let g:netrw_dirhist_0='/home/jorge/dotfiles/nvim'
 let g:netrw_dirhist_9='/home/jorge/dotfiles/nvim/modules'
@@ -7,6 +10,3 @@ let g:netrw_dirhist_8='/home/jorge/repos/mygit/course-management/build'
 let g:netrw_dirhist_7='/home/jorge/repos/oopp/server/build'
 let g:netrw_dirhist_6='/home/jorge/repos/assignment-template/course-management'
 let g:netrw_dirhist_5='/home/jorge/repos/sem/authentication/build'
-let g:netrw_dirhist_4='/home/jorge/notes/_sass'
-let g:netrw_dirhist_3='/home/jorge/repos/site/_posts'
-let g:netrw_dirhist_2='/home/jorge/notes/_layouts'
