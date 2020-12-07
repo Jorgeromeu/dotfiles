@@ -12,3 +12,4 @@ so ~/dotfiles/nvim/settings/keys.vim
 
 set foldmethod=syntax
 
+nnoremap \ :noh<CR>

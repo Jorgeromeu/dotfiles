@@ -19,7 +19,6 @@ let &packpath=&runtimepath
 
 so ~/dotfiles/nvim/settings/general.vim
 so ~/dotfiles/nvim/settings/keys.vim
-so ~/dotfiles/nvim/settings/functions.vim
 
 " ==================
 " Plugins
@@ -74,6 +73,9 @@ so ~/dotfiles/nvim/modules/lf.vim
 
 " Filetype specific settings
 autocmd Filetype markdown call SetMD()
+autocmd Filetype tex call SetMD()
+autocmd FileType c set foldmethod=syntax
+
 function SetMD()
 	so ~/dotfiles/nvim/settings/prose.vim
 	set nonumber

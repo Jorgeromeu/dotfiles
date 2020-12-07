@@ -33,3 +33,6 @@ set smartcase
 " sensible splits
 set splitbelow
 set splitright
+
+" folding
+set foldcolumn=2

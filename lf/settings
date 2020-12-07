@@ -2,6 +2,8 @@ set preview true
 set drawbox true
 set smartcase
 
+set period 1
+
 cmd mkdir ${{
   printf "Directory Name: "
   read ans
@@ -31,4 +33,3 @@ cmd open ${{
         *) xdg-open "$f" ;;
     esac
 }}
-
