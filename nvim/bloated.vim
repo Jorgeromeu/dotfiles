@@ -34,12 +34,11 @@ Plug 'tpope/vim-commentary'
 
 " filetypes
 Plug 'plasticboy/vim-markdown'
+Plug 'godlygeek/tabular'
 Plug 'lervag/vimtex'
-Plug 'sheerun/vim-polyglot'
 
 " aesthetics
 Plug 'arcticicestudio/nord-vim'
-Plug 'enthudave/star_wars.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
 
@@ -47,11 +46,8 @@ Plug 'junegunn/goyo.vim'
 Plug 'sirver/UltiSnips'  
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ptzz/lf.vim'
-Plug 'rbgrouleff/bclose.vim'
-Plug 'puremourning/vimspector'
 
-" enhanced highlighting
+" languages
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'justinmk/vim-syntax-extra'
@@ -81,4 +77,3 @@ function SetMD()
 	set nonumber
 	set norelativenumber
 endfunction
-

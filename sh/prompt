@@ -6,6 +6,7 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '%B%F{yellow}[%b]%f'
 zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:git:*' formats '%F{240}(%b)%f'
 
 git="\$vcs_info_msg_0_%b"
 err='%(?..%B%F{red}[%?]%f%b)'

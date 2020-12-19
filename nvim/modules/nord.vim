@@ -6,3 +6,4 @@ let g:nord_underline = 1
 colo nord
 
 hi Folded guibg=NONE ctermbg=NONE
+hi clear conceal

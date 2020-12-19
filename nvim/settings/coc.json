@@ -2,10 +2,10 @@
 
 	"diagnostic.warningSign":"!",
 
-	"git.changedDecorator": " *",
-	"git.stagedDecorator" :" s",
-	"git.untrackedDecorator": " u",
-	"git.conflictedDecorator" : " x",
+	"git.changedDecorator": " modified",
+	"git.stagedDecorator" :" staged",
+	"git.untrackedDecorator": " untracked",
+	"git.conflictedDecorator" : " conflict",
 
     "languageserver": {
         "ccls": {
@@ -41,5 +41,5 @@
             ]
         }
     },
-    "git.enableGutters": false
+    "git.enableGutters": true
 }

@@ -8,7 +8,7 @@ alias g='git'
 alias t='tmux'
 alias pm='pacman'
 alias cl='clear'
-alias ccat='highlight'
+alias ipy='ipython'
 
 # default options
 alias cp='cp -v'
@@ -23,11 +23,7 @@ alias rm='rm -v'
 alias ls='exa --color=auto --group-directories-first'
 alias ll='exa --group-directories-first -l --git'
 alias la='exa --color=auto --group-directories-first -a'
-alias la='exa --color=auto --group-directories-first -l --git -a'
+alias lla='exa --color=auto --group-directories-first -l --git -a'
 
 alias grep="grep --color=auto"
-alias gcc="gcc -Wall -g"
-
-# fun
-alias starwars="telnet towel.blinkenlights.nl"
-
+alias gcc="gcc -no-pie -Wall -g"
