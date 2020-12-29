@@ -1,1 +1,0 @@
-nnoremap FF :Lf<CR>

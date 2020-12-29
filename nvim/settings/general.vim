@@ -3,11 +3,10 @@
 " ==================
 set nocompatible
 
-
 " basic usability settings
 set hidden
 set wildmenu
-set mouse=a
+" set mouse=a
 set laststatus=2
 set noswapfile
 set visualbell
@@ -22,7 +21,7 @@ set backspace=indent,eol,start
 
 " line numbers
 set number
-" set relativenumber
+set relativenumber
 
 " search
 set hlsearch
@@ -35,7 +34,18 @@ set splitbelow
 set splitright
 
 " folding
-set foldcolumn=4
+set foldcolumn=3
+
+if has('nvim')
+	set foldcolumn=auto:9
+endif
+
+
+" word wrap
+set formatoptions=l
+set breakindent
+set linebreak
+set nowrap
 
 " path
 set path+=**

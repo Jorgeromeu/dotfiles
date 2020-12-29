@@ -1,7 +1,9 @@
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :Files<CR>
 
-" overload filetype mapping
 map <leader>ft :Filetypes<CR>
+
+map <leader>b :Buffers<CR>
+map <leader>f :Files<CR>
 
 " This is the default extra key bindings
 let g:fzf_action = {

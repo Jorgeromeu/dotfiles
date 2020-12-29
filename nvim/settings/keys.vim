@@ -12,10 +12,10 @@ let mapleader = " "
 nnoremap <silent> \ :noh \| echo<CR>
 
 " split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " quick save
 map <C-s> :wa<CR>
@@ -24,12 +24,12 @@ map <C-s> :wa<CR>
 map <leader>r :so ~/.vimrc<CR> 
 
 " swap lines
-map K ddkkp
-map J ddp
+" map K ddkkp
+" map J ddp
 
 " fast indenting
-map H <<
-map L >>
+" map H <<
+" map L >>
 
 " easily change filetype
 map <leader>ft :set filetype=
@@ -40,10 +40,6 @@ vnoremap <C-x> "+x
 
 " Y behaves like D anc C, ...
 map Y y$
-
-
-" code folding
-nnoremap <C-space> za
 
 " cursorline and cursorcolumn
 map <leader>- :set invcursorline<CR>

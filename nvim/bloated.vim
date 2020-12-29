@@ -46,6 +46,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'sirver/UltiSnips'  
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ivanov/vim-ipython'
 
 " languages
 Plug 'jackguo380/vim-lsp-cxx-highlight'
@@ -53,7 +54,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'calculuswhiz/vim-GAS-x86_64-highlighter'
 call plug#end()
-
 
 so ~/dotfiles/nvim/modules/commentary.vim
 so ~/dotfiles/nvim/modules/ultisnips.vim
@@ -64,15 +64,18 @@ so ~/dotfiles/nvim/modules/goyo.vim
 so ~/dotfiles/nvim/modules/nord.vim
 so ~/dotfiles/nvim/modules/coc.vim
 so ~/dotfiles/nvim/modules/vimtex.vim
-so ~/dotfiles/nvim/modules/vimspector.vim
-so ~/dotfiles/nvim/modules/lf.vim
 
 " Filetype specific settings
-autocmd Filetype markdown call SetMD()
-autocmd Filetype tex call SetMD()
-autocmd FileType c set foldmethod=syntax
+autocmd Filetype markdown call SetProse()
+autocmd Filetype tex call SetProse()
 
-function SetMD()
+autocmd FileType c set foldmethod=syntax
+autocmd FileType cpp set foldmethod=syntax
+autocmd FileType java set foldmethod=syntax
+
+command Prose execute SetProse()
+
+function SetProse()
 	so ~/dotfiles/nvim/settings/prose.vim
 	set nonumber
 	set norelativenumber

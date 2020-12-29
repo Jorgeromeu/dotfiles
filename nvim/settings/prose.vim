@@ -5,8 +5,3 @@ imap <C-k> <Esc>mz[sz=1<CR>`zi
 " work on visual lines rather than logical lines
 nnoremap j gj
 nnoremap k gk
-
-" word wrap
-set formatoptions=l
-set breakindent
-set linebreak
