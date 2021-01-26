@@ -6,7 +6,7 @@ set nocompatible
 " basic usability settings
 set hidden
 set wildmenu
-" set mouse=a
+set mouse=a
 set laststatus=2
 set noswapfile
 set visualbell
@@ -40,6 +40,7 @@ if has('nvim')
 	set foldcolumn=auto:9
 endif
 
+set nofoldenable
 
 " word wrap
 set formatoptions=l
@@ -54,3 +55,5 @@ set path+=**
 let g:netrw_banner=0		" disable banner
 let g:netrw_liststyle=3 	" tree view
 let g:netrw_winsize = 25
+
+let g:netrw_browse_split = 2 " open in vertical split

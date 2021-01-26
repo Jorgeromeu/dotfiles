@@ -12,4 +12,8 @@ so ~/dotfiles/nvim/settings/keys.vim
 
 set foldmethod=syntax
 
-nnoremap \ :noh<CR>
+nnoremap \ :noh
+set surround
+
+" CoC mappings
+nmap <leader>rn :action RenameElement<CR>

@@ -44,3 +44,6 @@ map Y y$
 " cursorline and cursorcolumn
 map <leader>- :set invcursorline<CR>
 map <leader>\ :set invcursorcolumn<CR>
+
+" explorer
+map <leader>e :Vexplore<CR>

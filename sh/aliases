@@ -15,6 +15,9 @@ alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
 
+alias less="less --RAW-CONTROL-CHARS --quit-if-one-screen --mouse"
+
+
 # alias ls='ls -hN --color=auto --group-directories-first'
 # alias ll='ls -l'
 # alias la='ls -A'

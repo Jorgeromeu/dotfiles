@@ -31,6 +31,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
+Plug 'junegunn/vim-peekaboo'
 
 " filetypes
 Plug 'plasticboy/vim-markdown'
@@ -46,13 +47,14 @@ Plug 'junegunn/goyo.vim'
 Plug 'sirver/UltiSnips'  
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ivanov/vim-ipython'
+Plug 'liuchengxu/graphviz.vim'
 
 " languages
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'calculuswhiz/vim-GAS-x86_64-highlighter'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 so ~/dotfiles/nvim/modules/commentary.vim
@@ -64,6 +66,7 @@ so ~/dotfiles/nvim/modules/goyo.vim
 so ~/dotfiles/nvim/modules/nord.vim
 so ~/dotfiles/nvim/modules/coc.vim
 so ~/dotfiles/nvim/modules/vimtex.vim
+autocmd Filetype dot so ~/dotfiles/nvim/modules/graphviz.vim
 
 " Filetype specific settings
 autocmd Filetype markdown call SetProse()
