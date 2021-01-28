@@ -48,7 +48,10 @@ set-option -g allow-rename off
 set -g renumber-windows on
 
 # easy config reload
-bind-key r source-file ~/dotfiles/tmux/tmux.conf\; display-message "config reloaded"
+bind-key r \
+  source-file ~/.config/tmux/tmux.conf\;\
+  source-file ~/.tmux.conf\;\
+  display-message "config reloaded"
 
 # toggle nested and local prefix
 bind -T root F12  \
