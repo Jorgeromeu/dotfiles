@@ -37,6 +37,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'plasticboy/vim-markdown'
 Plug 'godlygeek/tabular'
 Plug 'lervag/vimtex'
+Plug 'wlangstroth/vim-racket'
 
 " aesthetics
 Plug 'arcticicestudio/nord-vim'

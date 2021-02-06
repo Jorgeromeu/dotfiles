@@ -17,6 +17,23 @@ bind -n M-L resize-pane -R 5
 # use <, > for swapping paes
 bind > swap-pane -D       
 bind < swap-pane -U       
+
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+bind -n S-up swap-pane -U
+bind -n S-down swap-pane -D
+
+
+bind -n M-Left  resize-pane -L 5
+bind -n M-Right resize-pane -R 5
+bind -n M-up resize-pane -U 5
+bind -n M-down resize-pane -D 5
+
+# No delay for escape key press
+set -sg escape-time 0
+
  
 # enable mode
 setw -g mouse on
@@ -25,6 +42,9 @@ setw -g mouse on
 bind-key v split-window -h -c "#{pane_current_path}"
 bind-key h split-window -v -c "#{pane_current_path}"
 bind c new-window -c "#{pane_current_path}"
+
+bind-key -n M-v split-window -h -c "#{pane_current_path}"
+bind-key -n M-s split-window -v -c "#{pane_current_path}"
 
 # no confirm for closing panes
 bind-key x kill-pane
