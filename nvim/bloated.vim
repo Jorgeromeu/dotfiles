@@ -31,18 +31,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
-Plug 'junegunn/vim-peekaboo'
 
 " filetypes
 Plug 'plasticboy/vim-markdown'
 Plug 'godlygeek/tabular'
 Plug 'lervag/vimtex'
-Plug 'wlangstroth/vim-racket'
 
 " aesthetics
 Plug 'arcticicestudio/nord-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'calebsmith/vim-lambdify'
+Plug 'luochen1990/rainbow'
 
 " require dependencies
 Plug 'sirver/UltiSnips'  
@@ -84,3 +84,4 @@ function SetProse()
 	set nonumber
 	set norelativenumber
 endfunction
+

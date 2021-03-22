@@ -20,3 +20,5 @@ let &packpath=&runtimepath
 so ~/dotfiles/nvim/settings/general.vim
 so ~/dotfiles/nvim/settings/keys.vim
 
+colo industry
+set foldmethod=syntax

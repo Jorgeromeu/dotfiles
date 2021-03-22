@@ -1,5 +1,7 @@
 {
 
+    "metals.javaHome":"/usr/lib/jvm/java-11-openjdk",
+
 	"diagnostic.warningSign":"!",
 
 	"git.changedDecorator": " *",

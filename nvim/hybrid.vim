@@ -34,4 +34,5 @@ call plug#end()
 so ~/dotfiles/nvim/modules/commentary.vim
 so ~/dotfiles/nvim/modules/markdown.vim
 
-
+colo industry
+set foldmethod=syntax
