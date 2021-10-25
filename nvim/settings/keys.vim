@@ -20,17 +20,6 @@ nnoremap <silent> \ :noh \| echo<CR>
 " quick save
 map <C-s> :wa<CR>
 
-" reload vimrc
-map <leader>r :so ~/.vimrc<CR> 
-
-" swap lines
-" map K ddkkp
-" map J ddp
-
-" fast indenting
-" map H <<
-" map L >>
-
 " easily change filetype
 map <leader>ft :set filetype=
 
@@ -44,6 +33,3 @@ map Y y$
 " cursorline and cursorcolumn
 map <leader>- :set invcursorline<CR>
 map <leader>\ :set invcursorcolumn<CR>
-
-" explorer
-map <leader>e :Vexplore<CR>

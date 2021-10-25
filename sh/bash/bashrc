@@ -15,5 +15,6 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 # aliases
-. ~/dotfiles/sh/aliases.sh
+# . ~/dotfiles/sh/aliases.sh
+source ~/dotfiles/sh/aliases.sh
 

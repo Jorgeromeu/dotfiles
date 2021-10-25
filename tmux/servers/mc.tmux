@@ -4,4 +4,4 @@
 source "~/dotfiles/tmux/general.tmux"
 
 # theme
-source "~/dotfiles/tmux/themes/pi.tmux"
+source "~/dotfiles/tmux/themes/purple.tmux"

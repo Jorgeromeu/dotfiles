@@ -1,8 +1,8 @@
 #vim:ft=tmux
 
-# general
+# general 
 source "~/dotfiles/tmux/general.tmux"
 
 # theme
-source "~/dotfiles/tmux/themes/main.tmux"
+source "~/dotfiles/tmux/themes/blue.tmux"
 

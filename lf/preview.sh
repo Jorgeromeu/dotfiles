@@ -8,5 +8,4 @@ case "$1" in
     *.pdf) pdftotext "$1" -;;
     *.csv) cat table.csv | sed -e 's/,,/, ,/g' | column -s, -t;;
     *) bat --color always "$1";;
-
 esac

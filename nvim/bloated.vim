@@ -27,34 +27,27 @@ call plug#begin('~/dotfiles/nvim/runtime/plugged')
 " vimscript
 Plug 'vim-scripts/restore_view.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 
-" filetypes
-Plug 'plasticboy/vim-markdown'
-Plug 'godlygeek/tabular'
-Plug 'lervag/vimtex'
-
 " aesthetics
 Plug 'arcticicestudio/nord-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'calebsmith/vim-lambdify'
-Plug 'luochen1990/rainbow'
 
 " require dependencies
 Plug 'sirver/UltiSnips'  
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'liuchengxu/graphviz.vim'
 
 " languages
+Plug 'plasticboy/vim-markdown'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'calculuswhiz/vim-GAS-x86_64-highlighter'
+Plug 'lark-parser/vim-lark-syntax'
+Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
@@ -63,11 +56,8 @@ so ~/dotfiles/nvim/modules/ultisnips.vim
 so ~/dotfiles/nvim/modules/markdown.vim
 so ~/dotfiles/nvim/modules/fzf.vim
 so ~/dotfiles/nvim/modules/lightline.vim
-so ~/dotfiles/nvim/modules/goyo.vim
 so ~/dotfiles/nvim/modules/nord.vim
 so ~/dotfiles/nvim/modules/coc.vim
-so ~/dotfiles/nvim/modules/vimtex.vim
-autocmd Filetype dot so ~/dotfiles/nvim/modules/graphviz.vim
 
 " Filetype specific settings
 autocmd Filetype markdown call SetProse()

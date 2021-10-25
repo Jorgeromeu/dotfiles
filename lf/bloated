@@ -1,6 +1,0 @@
-# vim:ft=conf
-source ~/dotfiles/lf/settings
-
-# preview
-# requires: highlight
-set previewer ~/dotfiles/lf/preview

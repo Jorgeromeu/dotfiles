@@ -24,7 +24,6 @@ so ~/dotfiles/nvim/settings/keys.vim
 " ==================
 call plug#begin('~/dotfiles/nvim/runtime/plugged')
 Plug 'vim-scripts/restore_view.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
