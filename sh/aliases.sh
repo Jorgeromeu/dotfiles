@@ -18,9 +18,8 @@ alias pypy='pypy3'
 alias docker='sudo docker'
 
 # emacs
-alias e='emacsclient -nw'
-alias eg='emacsclient -c'
-alias ed='emacs --daemon'
+alias e='emacs -nw'
+alias eg='emacs'
 
 # screenkey
 alias scrnkey='screenkey -t 0.25 --persist --opacity 0 --font-color black'
