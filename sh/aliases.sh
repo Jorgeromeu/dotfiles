@@ -29,7 +29,7 @@ alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
 # use nvim as less
-alias less="nvim -c 'set nonumber laststatus=0' -"
+# alias less="nvim -c 'set nonumber laststatus=0' -"
 alias ls='exa --color=auto --group-directories-first'
 alias ll='exa --group-directories-first -l --git'
 alias la='exa --color=auto --group-directories-first -a'

@@ -1,0 +1,61 @@
+[user]
+	name = Jorge Romeu Huidobro
+	# email = j.romeuhuidobro@student.tudelft.nl
+	email = jorge.romeu.huidobro@gmail.com
+
+[core]
+	editor = nvim
+	excludesFile = /home/jorge/.gitignore
+	autocrlf = input
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+
+[color]
+    ui = true
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status -sb
+	cm = commit -m
+	l = log --oneline
+
+	; remove a file or directory from staging area
+	unstage = reset HEAD --
+
+	; undo most recent commit
+	undo = reset --soft HEAD^
+
+	; beautified git tree
+	hist = log --all --decorate --oneline --graph
+	
+	; pretty printed stash list
+	sl = stash list --pretty=format:\"%C(red)%h%C(reset) - %C(dim yellow)(%C(bold magenta)%gd%C(dim yellow))%C(reset) %<(40,trunc)%s %C(green)(%cr) %C(bold blue)<%an>%C(reset)\"
+
+	; completely discard any uncommited changes	
+	; discard = !git stash save --keep-index --include-untracked && git stash drop 
+	discard = !git stash -a  && git stash drop
+
