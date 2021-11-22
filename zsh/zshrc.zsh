@@ -1,30 +1,49 @@
-# prompt
-source ~/dotfiles/sh/prompt.sh
+# Simple prompt with git info
+# ===========================
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%B%F{yellow}[%b]%f'
+zstyle ':vcs_info:*' enable git
 
-# vi mode
+git="\$vcs_info_msg_0_%b"
+err='%(?..%B%F{red}[%?]%f%b)'
+wd='%B%F{blue}[%5~]%f%b'
+
+gits="\$vcs_info_msg_0_%b"
+errs='%(?..%B%F{red}%?%f%b)'
+wds='%B%F{blue}%5~%f%b'
+
+PROMPT="${err}${git}${wd} "
+
+
+# Vim bindings
+# ============
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 export KEYTIMEOUT=20
 
-# history
+# History
+# =======
 HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zshhistory
 
-# aliases
-source ~/dotfiles/sh/aliases.sh
+# Aliases
+# =======
+source ~/dotfiles/aliases.sh
 
-# auto ls
+# Automatically "ls"
+# =================
 function chpwd() {
     emulate -L zsh
     ls 
 }
 
-# use neovim as manpager
-export MANPAGER="nvim -c 'set ft=man laststatus=0' -"
-
-# tab-complete
+# Tab complete
+# ============
 autoload -U compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -32,13 +51,9 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-# source fzf completion 
-source /usr/share/fzf/completion.zsh
-source /usr/share/fzf/key-bindings.zsh
-
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 # Change cursor shape for different vi modes.
+# ==========================================
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
@@ -60,13 +75,10 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 
-source ~/dotfiles/sh/plugins/zsh-syntax-hl/zsh-syntax-highlighting.zsh
+# Syntax highlighting
+# ===================
+source ~/dotfiles/zsh/zsh-syntax-hl/zsh-syntax-highlighting.zsh
 
-# profile
+# Load env variables
 source ~/.profile
 
-PATH="/home/jorge/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/jorge/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/jorge/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/jorge/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/jorge/perl5"; export PERL_MM_OPT;
