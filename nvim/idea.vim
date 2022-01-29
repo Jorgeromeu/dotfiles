@@ -7,14 +7,12 @@
 " Settings
 " ==================
 
-so ~/dotfiles/nvim/settings/general.vim
-so ~/dotfiles/nvim/settings/keys.vim
+so ~/dotfiles/nvim/common.vim
 
 set foldmethod=syntax
 
 nnoremap \ :noh<CR>
 
-set norelativenumber
 
 " custom bindings
 nmap <leader>rn <Action>(RenameElement)

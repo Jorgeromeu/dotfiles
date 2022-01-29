@@ -16,26 +16,21 @@ alias sysd='systemctl'
 alias antlr='antlr4'
 alias pypy='pypy3'
 alias docker='sudo docker'
-
-# emacs
 alias e='emacs -nw'
 alias eg='emacs'
-
-# screenkey
 alias scrnkey='screenkey -t 0.25 --persist --opacity 0 --font-color black'
+
+# instead of ls im using exa
+alias ll='exa -F --group-directories-first -l --git'
+alias la='exa -F --color=auto --group-directories-first -a'
 
 # default options
 alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
-# use nvim as less
-# alias less="nvim -c 'set nonumber laststatus=0' -"
-alias ls='exa --color=auto --group-directories-first'
-alias ll='exa --group-directories-first -l --git'
-alias la='exa --color=auto --group-directories-first -a'
+alias ls='exa -F --color=auto --group-directories-first'
 alias grep="grep --color=auto"
 alias gcc="gcc -no-pie -Wall -g"
+alias g++="g++ -no-pie -Wall -g"
 alias gdb="gdb -q"
-alias cgdb="cgdb -q"
 alias make="make -k"
-

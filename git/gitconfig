@@ -59,3 +59,6 @@
 	; discard = !git stash save --keep-index --include-untracked && git stash drop 
 	discard = !git stash -a  && git stash drop
 
+	; list all the files with conflicts
+	conflicts = diff --name-only --diff-filter=U
+
