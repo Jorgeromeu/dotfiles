@@ -25,10 +25,10 @@ bindkey -M viins 'jj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 export KEYTIMEOUT=20
 
-# History
+# Big History
 # =======
-HISTSIZE=1000000
-SAVEHIST=1000000
+HISTSIZE=1000000000
+SAVEHIST=1000000000
 HISTFILE=~/.zshhistory
 
 # Aliases
@@ -75,8 +75,8 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 
-# Syntax highlighting
-# ===================
+# Syntax highlighting (via plugin)
+# ================================
 source ~/dotfiles/zsh/zsh-syntax-hl/zsh-syntax-highlighting.zsh
 
 # Load env variables

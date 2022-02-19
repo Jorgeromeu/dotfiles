@@ -57,7 +57,7 @@ let g:netrw_browse_split=2
 " ==================
 
 " avoid the esc key
-inoremap jj <Esc>
+" inoremap jj <Esc>
 
 " leader mapping
 let mapleader = " "
