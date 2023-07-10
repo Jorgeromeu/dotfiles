@@ -7,6 +7,10 @@ setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '%B%F{yellow}[%b]%f'
 zstyle ':vcs_info:*' enable git
 
+# utf8
+LC_CTYPE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+
 git="\$vcs_info_msg_0_%b"
 err='%(?..%B%F{red}[%?]%f%b)'
 wd='%B%F{blue}[%5~]%f%b'
@@ -42,7 +46,7 @@ function chpwd() {
     ls 
 }
 
-# Tab complete
+# Fancy tab complete
 # ============
 autoload -U compinit
 zstyle ':completion:*' menu select
@@ -50,7 +54,6 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
-
 
 # Change cursor shape for different vi modes.
 # ==========================================
@@ -82,3 +85,7 @@ source ~/dotfiles/zsh/zsh-syntax-hl/zsh-syntax-highlighting.zsh
 # Load env variables
 source ~/.profile
 
+# opam configuration
+[[ ! -r /home/jorge/.opam/opam-init/init.zsh ]] || source /home/jorge/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+[ -f "/home/jorge/.ghcup/env" ] && source "/home/jorge/.ghcup/env" # ghcup-env

@@ -5,7 +5,6 @@
 " keybindigs, and so on but removes all plugins. It is fully compatible with
 " vanilla vim
 
-
 " General Settings
 so ~/dotfiles/nvim/common.vim
 

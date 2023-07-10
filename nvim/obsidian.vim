@@ -9,6 +9,13 @@ imap jj <Esc>
 nmap j gj
 nmap k gk
 
-" Yank to system clipboard
 nmap \ :noh
 
+exmap unfoldall obcommand editor:unfold-all
+nmap zR :unfoldall
+
+exmap foldall obcommand editor:fold-all
+nmap zM :foldall
+
+exmap foldtoggle obcommand editor:toggle-fold
+nmap za :foldtoggle

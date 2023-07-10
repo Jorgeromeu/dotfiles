@@ -56,6 +56,9 @@ let g:netrw_browse_split=2
 " MAPPINGS
 " ==================
 
+" g mappings for common tasks i like
+nmap gX :only<CR>
+
 " avoid the esc key
 " inoremap jj <Esc>
 
