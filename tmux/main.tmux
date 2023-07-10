@@ -81,10 +81,6 @@ bind -T off F12 \
 # THEME
 # =====
 
-# theme
-source "~/dotfiles/tmux/themes/blue.tmux"
-
-
 # status line
 set -g status-justify left
 set -g status-fg white
