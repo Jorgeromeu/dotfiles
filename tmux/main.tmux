@@ -1,5 +1,13 @@
 #vim:ft=tmux
 
+# =================
+# MACHINE-SPECIFIC SETTINGS
+# =================
+
+# theme color
+set -g @active_window_color "blue"
+
+
 # GENERAL SETTINGS
 # =================
 
@@ -21,14 +29,11 @@ bind -n M-L resize-pane -R 5
 bind > swap-pane -D       
 bind < swap-pane -U       
 
-# use Alv-arrows to resize panes
+# use Alt-arrows to resize panes
 bind -n M-Left  resize-pane -L 5
 bind -n M-Right resize-pane -R 5
 bind -n M-up resize-pane -U 5
 bind -n M-down resize-pane -D 5
-
-# No delay for escape key press
-set -sg escape-time 0
  
 # enable mouse
 setw -g mouse on
@@ -36,7 +41,6 @@ setw -g mouse on
 # set simpler pane split keys
 # h -> split horizontally
 # v -> split vertically
-#
 # also, new windows/panes will open in the wd of the current pane
 bind-key v split-window -h -c "#{pane_current_path}"
 bind-key h split-window -v -c "#{pane_current_path}"
@@ -77,27 +81,32 @@ bind -T off F12 \
   set -u window-status-current-format \;\
   refresh-client -S
 
+# Make `prefix r` reload the config file
+unbind r
+bind r source-file ~/.tmux.conf \; display-message "tmux config reloaded!"
 
-# THEME
-# =====
 
-# status line
+# =================
+# STATUS LINE
+# =================
+
+set -g status-style fg=white,bg=default
 set -g status-justify left
-set -g status-fg white
-set -g status-bg black
-set -g status-left '#[fg=black,bg=blue,bold] #S #[bg=black] '
-set -g status-right "#[fg=black, bg=blue,bold] #H "
 
-set -g window-status-format "#[fg=black,bg=cyan] #I #[fg=black, bg=cyan] #W "
-set -g window-status-current-format "#[fg=black,bg=yellow, bold] #I #[fg=black, bg=cyan] #W "
+# left: session name with padding
+set -g status-left "#S "
 
-# prompt
-set -g message-style bg=black,fg=white
+# right: hostname
+set -g status-right "#H"
 
-# borders
+# windows: no spacing between them
+set -g window-status-format "#[fg=grey,bg=default]#I:#W"
+set -g window-status-current-format "#[fg=#{@active_window_color},bg=default,bold]#I:#W"
+
+# messages / prompts
+set -g message-style fg=white,bg=default
+
+# Pane Borders
+run-shell "tmux set -g pane-active-border-style fg=$(tmux show-option -gv @active_window_color)"
 set -g pane-border-style fg=black
-set -g pane-active-border-style fg=black
-
-bind-key b set -g pane-active-border-style fg=blue
-bind-key B set -g pane-active-border-style fg=black
 

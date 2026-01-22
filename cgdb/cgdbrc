@@ -1,5 +1,0 @@
-set autosourcereload
-imap jj <Esc>
-
-set winsplit=src_big
-
