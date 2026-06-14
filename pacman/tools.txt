@@ -1,0 +1,3 @@
+# Tools used by the pacman module.
+# Format: <tool>  <description>
+pacman     Arch Linux package manager

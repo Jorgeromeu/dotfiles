@@ -1,0 +1,4 @@
+# Tools used by the nvim module.
+# Format: <tool>  <description>
+nvim       neovim
+vim        vim (works as fallback)

@@ -1,9 +1,12 @@
+
+# DevX tmux config
 #vim:ft=tmux
 # =================
 # MACHINE-SPECIFIC SETTINGS
 # =================
-# theme color
+# theme color (default; hosts can override in ~/.tmux.local.conf)
 set -g @active_window_color "blue"
+source-file -q ~/.tmux.local.conf
 # GENERAL SETTINGS
 # =================
 # set TERM

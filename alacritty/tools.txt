@@ -1,0 +1,3 @@
+# Tools used by the alacritty module.
+# Format: <tool>  <description>
+alacritty  GPU-accelerated terminal emulator

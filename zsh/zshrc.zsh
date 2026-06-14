@@ -1,25 +1,28 @@
 # Simple prompt with git info
 # ===========================
 autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats '%B%F{yellow}[%b]%f'
+zstyle ':vcs_info:git:*' formats '%B%F{yellow}%b%f'
 zstyle ':vcs_info:*' enable git
 
 # utf8
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
-git="\$vcs_info_msg_0_%b"
-err='%(?..%B%F{red}[%?]%f%b)'
-wd='%B%F{blue}[%5~]%f%b'
-
-gits="\$vcs_info_msg_0_%b"
-errs='%(?..%B%F{red}%?%f%b)'
-wds='%B%F{blue}%5~%f%b'
-
-PROMPT="${err}${git}${wd} "
+# Build the prompt from only the non-empty segments, joined with a single
+# space. ${(j: :)parts} guarantees exactly one space between parts and no
+# leading/trailing space; the explicit trailing space is added after.
+build_prompt() {
+  local exit_code=$?
+  vcs_info
+  local -a parts
+  (( exit_code ))             && parts+="%B%F{red}${exit_code}%f%b"   # exit code
+  [[ -n $SSH_CONNECTION ]]    && parts+="%F{magenta}%m%f"             # hostname (SSH only)
+  [[ -n $vcs_info_msg_0_ ]]   && parts+="$vcs_info_msg_0_"            # git branch
+  parts+="%B%F{blue}%5~%f%b"                                          # working dir
+  PROMPT="${(j: :)parts} "
+}
+precmd_functions+=( build_prompt )
 
 
 # Vim bindings
@@ -37,14 +40,7 @@ HISTFILE=~/.zshhistory
 
 # Aliases
 # =======
-source ~/dotfiles/aliases.sh
-
-# Automatically "ls"
-# =================
-function chpwd() {
-    emulate -L zsh
-    ls 
-}
+source ~/dotfiles/zsh/aliases.sh
 
 # Fancy tab complete
 # ============
@@ -54,6 +50,9 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
+# Tab cycles through matches; Shift-Tab goes backward
+bindkey '^I' menu-complete
+bindkey '^[[Z' reverse-menu-complete
 
 # Change cursor shape for different vi modes.
 # ==========================================
@@ -89,3 +88,13 @@ source ~/.profile
 [[ ! -r /home/jorge/.opam/opam-init/init.zsh ]] || source /home/jorge/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 [ -f "/home/jorge/.ghcup/env" ] && source "/home/jorge/.ghcup/env" # ghcup-env
+
+# zoxide (smart cd)
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+
+# fzf (fuzzy finder shell integration; installed via `fzf --install`)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# nvm (node version manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
