@@ -13,7 +13,23 @@ export CONDA_CHANGEPS1=false
 # Name of the active dev environment (python venv, conda, etc.), or empty.
 prompt_env_name() {
   if [[ -n $VIRTUAL_ENV ]]; then
-    echo "${VIRTUAL_ENV:t}"                                   # python venv / poetry / uv
+    # ${VIRTUAL_ENV:t} is just the venv folder name, which is usually the
+    # uninformative ".venv"/"venv". Prefer the prompt label recorded in
+    # pyvenv.cfg (set via `python -m venv --prompt` or uv), then fall back to
+    # the parent directory name when the folder itself is generic.
+    local name="${VIRTUAL_ENV:t}"
+    local cfg="$VIRTUAL_ENV/pyvenv.cfg"
+    local label
+    if [[ -r $cfg ]]; then
+      label="${${(M)${(f)$(<$cfg)}:#prompt =*}#prompt = }"
+    fi
+    if [[ -n $label ]]; then
+      echo "$label"
+    elif [[ $name == (.venv|venv|.env|env|virtualenv|.virtualenv) ]]; then
+      echo "${VIRTUAL_ENV:h:t}"                               # parent dir name
+    else
+      echo "$name"
+    fi
   elif [[ -n $CONDA_DEFAULT_ENV ]]; then
     echo "${CONDA_DEFAULT_ENV:t}"                             # conda / mamba
   fi
