@@ -92,8 +92,20 @@ source ~/.profile
 # zoxide (smart cd)
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
-# fzf (fuzzy finder shell integration; installed via `fzf --install`)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf (fuzzy finder shell integration: Ctrl-R history, Ctrl-T files, Alt-C cd)
+if command -v fzf >/dev/null; then
+  if fzf --zsh >/dev/null 2>&1; then
+    source <(fzf --zsh)                                   # fzf >= 0.48
+  elif [ -d /usr/share/doc/fzf/examples ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh   # Debian/Ubuntu pkg
+    source /usr/share/doc/fzf/examples/completion.zsh
+  elif [ -d /usr/share/fzf ]; then
+    source /usr/share/fzf/key-bindings.zsh                # Arch pkg
+    source /usr/share/fzf/completion.zsh
+  elif [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh                                     # git-clone install
+  fi
+fi
 
 # nvm (node version manager)
 export NVM_DIR="$HOME/.nvm"
