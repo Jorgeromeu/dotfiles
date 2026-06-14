@@ -17,7 +17,7 @@ build_prompt() {
   vcs_info
   local -a parts
   (( exit_code ))             && parts+="%B%F{red}${exit_code}%f%b"   # exit code
-  [[ -n $SSH_CONNECTION ]]    && parts+="%F{magenta}%m%f"             # hostname (SSH only)
+  [[ -n $SSH_CONNECTION ]]    && parts+="%B%F{magenta}%m%f%b"         # hostname (SSH only)
   [[ -n $vcs_info_msg_0_ ]]   && parts+="$vcs_info_msg_0_"            # git branch
   parts+="%B%F{blue}%5~%f%b"                                          # working dir
   PROMPT="${(j: :)parts} "
