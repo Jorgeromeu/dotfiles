@@ -142,3 +142,13 @@ fi
 # nvm (node version manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# uvactivate (activate the venv uv would pick for $PWD: workspace root, or a standalone project)
+uvactivate() {
+  local py bin
+  py=$(uv python find "$@") || return
+  bin=${py:h}
+  [[ -f $bin/activate ]] || { print -u2 "uvactivate: no project venv for $PWD (run 'uv sync')"; return 1 }
+  (( $+functions[deactivate] )) && deactivate
+  source $bin/activate
+  print "activated $VIRTUAL_ENV"
+}

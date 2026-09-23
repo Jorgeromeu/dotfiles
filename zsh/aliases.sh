@@ -57,7 +57,16 @@ if command -v g++ >/dev/null; then
     alias g++='g++ -no-pie -Wall -g'
 fi
 
-# misc utilities 
+# GPU device selection
+# `gpus 0 python train.py` / `gpus 0,1 python train.py` -> runs the command
+# with CUDA_VISIBLE_DEVICES set, without touching the rest of your env.
+gpus() {
+    local devices=$1
+    shift
+    CUDA_VISIBLE_DEVICES="$devices" "$@"
+}
+
+# misc utilities
 if command -v xdg-open >/dev/null; then
     alias xopen='xdg-open'
 fi
