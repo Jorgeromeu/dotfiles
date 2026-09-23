@@ -142,3 +142,7 @@ fi
 # nvm (node version manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+export PATH="$HOME/texlive/2026/bin/x86_64-linux:$PATH"
+
+# snap binaries (WSL starts non-login shells, so /etc/profile.d/apps-bin-path.sh never runs)
+export PATH="$PATH:/snap/bin"
