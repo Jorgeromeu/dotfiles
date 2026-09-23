@@ -1,3 +1,4 @@
+#vim:ft=tmux
 # =================
 # MACHINE-SPECIFIC SETTINGS
 # =================
@@ -66,6 +67,10 @@ bind -T off F12 \
   set -g window-status-current-style fg=blue,bg=default,bold \;\
   set -g window-status-current-format "#[fg=blue,bg=default,bold]#I:#W" \;\
   refresh-client -S
+# disable the useless clock on prefix t
+unbind t
+# dont leave on kill
+set -g detach-on-destroy off
 # Make `prefix r` reload the config file
 unbind r
 bind r source-file ~/.tmux.conf \; display-message "tmux config reloaded!"
@@ -75,6 +80,8 @@ bind r source-file ~/.tmux.conf \; display-message "tmux config reloaded!"
 set -g status-style fg=white,bg=default
 set -g status-justify left
 # left: session name with padding
+# (tmux defaults status-left-length to 10, which clips anything longer)
+set -g status-left-length 40
 set -g status-left "#S "
 # right: hostname
 set -g status-right "#H"
@@ -86,3 +93,18 @@ set -g message-style fg=white,bg=default
 # Pane Borders
 run-shell "tmux set -g pane-active-border-style fg=$(tmux show-option -gv @active_window_color)"
 set -g pane-border-style fg=black
+# =================
+# PANE TITLES
+# =================
+# only titles set manually with Alt-t count; they're stored in the @title pane
+# option (programs can change tmux's own pane_title via escape codes, but not @title)
+# Alt-t to set the pane title (empty clears it)
+bind -n M-t command-prompt -I "#{@title}" "set -p @title \"%%%\" ; pane-title-bar"
+# title text gets its own colour so it's readable on the black inactive border
+set -g pane-border-format "#{?#{@title},#{?pane_active,#[fg=#{@active_window_color}#,bold],#[fg=grey]} #{@title} ,}"
+# the top border line is shown only in windows where some pane has a title;
+# pane-title-bar recomputes that for the current window
+set -g pane-border-status off
+set -s command-alias[100] 'pane-title-bar=if -F "#{P:#{@title}}" "set -w pane-border-status top" "set -w pane-border-status off"'
+set-hook -g pane-exited 'pane-title-bar'
+set-hook -g after-kill-pane 'pane-title-bar'

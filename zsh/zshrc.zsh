@@ -146,3 +146,14 @@ export PATH="$HOME/texlive/2026/bin/x86_64-linux:$PATH"
 
 # snap binaries (WSL starts non-login shells, so /etc/profile.d/apps-bin-path.sh never runs)
 export PATH="$PATH:/snap/bin"
+
+# uvactivate (activate the venv uv would pick for $PWD: workspace root, or a standalone project)
+uvactivate() {
+  local py bin
+  py=$(uv python find "$@") || return
+  bin=${py:h}
+  [[ -f $bin/activate ]] || { print -u2 "uvactivate: no project venv for $PWD (run 'uv sync')"; return 1 }
+  (( $+functions[deactivate] )) && deactivate
+  source $bin/activate
+  print "activated $VIRTUAL_ENV"
+}
