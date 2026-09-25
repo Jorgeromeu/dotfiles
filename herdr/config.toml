@@ -1,29 +1,24 @@
-# herdr config — mirrors the pane/tab bindings in tmux/main.tmux
-# Full default config: `herdr --default-config`
-# Apply changes to a running server: `herdr server reload-config` (or prefix+r)
 onboarding = false
 
 [keys]
-# prefix stays ctrl+b, same as tmux
-
 # Alt-vim keys to switch panes 
 focus_pane_left  = "alt+h"
 focus_pane_down  = "alt+j"
 focus_pane_up    = "alt+k"
 focus_pane_right = "alt+l"
 
-# Alt-shift-vim and Alt-arrows to resize panes (tmux: M-H/J/K/L, M-arrows)
-resize_pane_left  = ["alt+shift+h", "alt+left"]
-resize_pane_down  = ["alt+shift+j", "alt+down"]
-resize_pane_up    = ["alt+shift+k", "alt+up"]
-resize_pane_right = ["alt+shift+l", "alt+right"]
+# Alt-arrows to resize panes (tmux: M-arrows)
+resize_pane_left  = "alt+left"
+resize_pane_down  = "alt+down"
+resize_pane_up    = "alt+up"
+resize_pane_right = "alt+right"
 
 # simpler split keys 
 # current pane's cwd by default ([terminal] new_cwd = "follow")
 split_vertical   = "prefix+v"   # side by side
 split_horizontal = "prefix+h"   # stacked
 
-# new tab / close pane 
+# new tab / close pane
 new_tab    = "prefix+c"
 close_pane = "prefix+x"
 
@@ -34,15 +29,37 @@ resize_mode   = "prefix+shift+r"
 # Alt-t to set the pane title (tmux: M-t)
 rename_pane = ["prefix+shift+p", "alt+t"]
 
+# prefix + arrows swaps the current pane with its neighbour
+[[keys.command]]
+key = "prefix+left"
+type = "shell"
+command = "herdr pane swap --current --direction left >/dev/null"
+
+[[keys.command]]
+key = "prefix+down"
+type = "shell"
+command = "herdr pane swap --current --direction down >/dev/null"
+
+[[keys.command]]
+key = "prefix+up"
+type = "shell"
+command = "herdr pane swap --current --direction up >/dev/null"
+
+[[keys.command]]
+key = "prefix+right"
+type = "shell"
+command = "herdr pane swap --current --direction right >/dev/null"
+
 [ui]
 pane_gaps = false
 pane_outer_borders = true
-# collapsed sidebar
 sidebar_start_collapsed = true
-# sidebar_collapsed_mode = "hidden"
-# status_indicators = "dots"
-
+pane_scrollbars = false
+tab_bar_position="bottom"
 status_indicators = "symbols"
+# sidebar_collapsed_mode = "hidden"
+# show_agent_labels_on_pane_borders = true
+
 [ui.toast]
 delivery = "herdr"
 
