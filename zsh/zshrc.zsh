@@ -2,7 +2,7 @@
 # ===========================
 autoload -Uz vcs_info
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats '%B%F{yellow}%b%f'
+zstyle ':vcs_info:git:*' formats '%B%F{yellow}⎇ %b%f'
 zstyle ':vcs_info:*' enable git
 
 # Let build_prompt own the env segment instead of the tools munging PROMPT
@@ -39,6 +39,17 @@ prompt_env_name() {
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
+# Working dir relative to the git repo: "repo/sub/dir", or "repo:worktree/sub/dir"
+# inside a linked worktree. Falls back to the plain path outside a repo.
+prompt_dir() {
+  local top common
+  top=$(git rev-parse --show-toplevel 2>/dev/null) || { print -rn -- "%5~"; return }
+  common=$(git rev-parse --path-format=absolute --git-common-dir)
+  local label=${common:h:t}                        # main checkout's dir name
+  [[ $top != ${common:h} ]] && label+=":${top:t}"  # linked worktree's name
+  print -rn -- "${label}${${PWD:A}#$top}"
+}
+
 # Build the prompt from only the non-empty segments, joined with a single
 # space. ${(j: :)parts} guarantees exactly one space between parts and no
 # leading/trailing space; the explicit trailing space is added after.
@@ -51,7 +62,7 @@ build_prompt() {
   [[ -n $env_name ]]          && parts+="%B%F{green}(${env_name})%f%b"  # dev env (venv/conda)
   [[ -n $SSH_CONNECTION ]]    && parts+="%B%F{magenta}%m%f%b"         # hostname (SSH only)
   [[ -n $vcs_info_msg_0_ ]]   && parts+="$vcs_info_msg_0_"            # git branch
-  parts+="%B%F{blue}%5~%f%b"                                          # working dir
+  parts+="%B%F{blue}$(prompt_dir)%f%b"                                # working dir
   PROMPT="${(j: :)parts} "
 }
 precmd_functions+=( build_prompt )
@@ -150,10 +161,30 @@ export PATH="$PATH:/snap/bin"
 # uvactivate (activate the venv uv would pick for $PWD: workspace root, or a standalone project)
 uvactivate() {
   local py bin
-  py=$(uv python find "$@") || return
+  py=$(env -u VIRTUAL_ENV uv python find "$@") || return   # ignore any already-active venv
   bin=${py:h}
   [[ -f $bin/activate ]] || { print -u2 "uvactivate: no project venv for $PWD (run 'uv sync')"; return 1 }
   (( $+functions[deactivate] )) && deactivate
   source $bin/activate
   print "activated $VIRTUAL_ENV"
 }
+
+# Worktrees
+# =========
+# `wtcd <name>` cds into one of ~/research's Claude worktrees, or `wtcd research`
+# into the main checkout; tab-completes the names with each one's branch and path alongside.
+wtcd() {
+  (( $# )) || { echo "usage: wtcd <worktree>" >&2; git -C ~/research worktree list >&2; return 1 }
+  if [[ $1 == research ]]; then cd ~/research; else cd ~/research/.claude/worktrees/$1; fi
+}
+_wtcd() {
+  local -a names branches dirs items
+  local dir sha branch i
+  git -C ~/research worktree list | while read -r dir sha branch; do
+    names+=${dir:t}; branches+=${branch//[\[\]]/}; dirs+=${(D)dir}
+  done
+  local w=${#${(O@)branches//?/X}[1]}  # longest branch, to align the path column
+  for i in {1..$#names}; do items+=("${names[i]}:${(r:w:)branches[i]}  ${dirs[i]}"); done
+  _describe worktree items
+}
+compdef _wtcd wtcd
