@@ -67,7 +67,8 @@ pane_gaps = false
 pane_outer_borders = false
 sidebar_start_collapsed = true
 pane_scrollbars = false
-tab_bar_position="bottom"
+tab_bar_position = "bottom"
+tab_bar_right = [{ type = "hostname" }]   # tmux status-right "#H"
 status_indicators = "symbols"
 sidebar_collapsed_mode = "hidden"
 # show_agent_labels_on_pane_borders = true
@@ -86,3 +87,5 @@ name = "catppuccin"
 auto_switch = false
 [theme.custom]
 panel_bg = "reset"
+# no background behind inactive tabs (tmux-like)
+surface0    = "reset"
