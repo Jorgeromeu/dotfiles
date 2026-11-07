@@ -50,15 +50,33 @@ key = "prefix+right"
 type = "shell"
 command = "herdr pane swap --current --direction right >/dev/null"
 
+# prefix + a toggles sidebar agents: focus (this workspace + needs-attention) <-> all
+[[keys.command]]
+key = "prefix+a"
+type = "shell"
+command = "~/.config/herdr/agent-view.sh >/dev/null"
+
+# prefix + shift+b flips the collapsed sidebar between compact rail and fully hidden
+[[keys.command]]
+key = "prefix+shift+b"
+type = "shell"
+command = "~/.config/herdr/sidebar-mode.sh"
+
 [ui]
 pane_gaps = false
-pane_outer_borders = true
+pane_outer_borders = false
 sidebar_start_collapsed = true
 pane_scrollbars = false
 tab_bar_position="bottom"
 status_indicators = "symbols"
-# sidebar_collapsed_mode = "hidden"
+sidebar_collapsed_mode = "hidden"
 # show_agent_labels_on_pane_borders = true
+
+
+# Two rows per agent, no agent name (only claude is used): title, then dimmed location
+[ui.sidebar.agents]
+row_gap = 1
+rows = [["state_icon", "terminal_title_stripped"], [{ token = "machine", dim = true }, "workspace", "tab", "pane"]]
 
 [ui.toast]
 delivery = "herdr"
@@ -66,3 +84,5 @@ delivery = "herdr"
 [theme]
 name = "catppuccin"
 auto_switch = false
+[theme.custom]
+panel_bg = "reset"
