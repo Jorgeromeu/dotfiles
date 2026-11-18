@@ -1,8 +1,7 @@
 # Tools used by the zsh module.
 # Format: <tool>  <description>
 zsh        Z shell itself
-exa        nicer ls replacement (used by aliases.sh)
+eza        nicer ls replacement (used by aliases.sh)
 zoxide     smart cd alternative
 fzf        fuzzy finder
-sshfs      mount remote dirs over ssh
-ipython    enhanced python REPL
+ipython    enhanced python REPL (ipy alias)

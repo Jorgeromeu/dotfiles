@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Central dispatcher for dotfiles. Modules are subdirectories containing
-# an executable install.sh (and optionally other executable *.sh scripts,
+# an executable commands/link.sh (and optionally other executable *.sh scripts,
 # each of which becomes a subcommand of that module).
 #
 # Usage:
@@ -9,9 +9,7 @@
 set -eu
 
 DOT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
-
-# Modules to skip when running `all` because they need extra input.
-SKIP_IN_ALL=(nvim pacman)
+source "$DOT_ROOT/lib.sh"   # colors
 
 # ---------- discovery ----------
 
@@ -53,24 +51,15 @@ script_desc() {
     ' "$1"
 }
 
-in_array() {
-    local needle="$1"; shift
-    local item
-    for item in "$@"; do
-        [ "$item" = "$needle" ] && return 0
-    done
-    return 1
-}
-
 print_subcommands() {
     local mod="$1" indent="$2" sub desc f
     for sub in $(list_subcommands "$mod"); do
         f="$DOT_ROOT/$mod/commands/$sub.sh"
         desc="$(script_desc "$f")"
         if [ -n "$desc" ]; then
-            printf '%s%-14s %s\n' "$indent" "$sub" "$desc"
+            printf '%s%s%-14s%s %s\n' "$indent" "$GREEN" "$sub" "$RESET" "$desc"
         else
-            printf '%s%s\n' "$indent" "$sub"
+            printf '%s%s%s%s\n' "$indent" "$GREEN" "$sub" "$RESET"
         fi
     done
 }
@@ -83,38 +72,33 @@ usage: ./dot.sh <module> <subcommand> [args...]
        ./dot.sh <top-level-command> [args...]
 
 top-level commands:
-  list                  list available modules
-  all                   install every module that doesn't need extra input
-  tools [--missing]     show recommended tools and which are installed
+  link-all              link every module's config (except ones needing input)
+  tools [--missing]     show each module's tools and which are installed
   help                  show this help
 
 modules:
 EOF
     local mod
     for mod in $(list_modules); do
-        echo "  $mod"
+        echo "  ${BOLD}${BLUE}$mod${RESET}"
         print_subcommands "$mod" "    "
     done
 }
 
-cmd_list() {
-    list_modules
-}
-
-cmd_all() {
+cmd_link_all() {
     local m
     for m in $(list_modules); do
-        if in_array "$m" "${SKIP_IN_ALL[@]}"; then
-            echo "skipped $m  (needs extra input — run: ./dot.sh $m install)"
+        if grep -q '^# skip-in-link-all' "$DOT_ROOT/$m/commands/link.sh" 2>/dev/null; then
+            echo "${YELLOW}skipped $m${RESET}  (needs extra input — run: ./dot.sh $m link)"
             continue
         fi
-        if [ ! -x "$DOT_ROOT/$m/commands/install.sh" ]; then
-            echo "skipped $m  (no install.sh)"
+        if [ ! -x "$DOT_ROOT/$m/commands/link.sh" ]; then
+            echo "${YELLOW}skipped $m${RESET}  (no link.sh)"
             continue
         fi
         echo
-        echo "=== $m install ==="
-        "$DOT_ROOT/$m/commands/install.sh"
+        echo "${BOLD}${BLUE}=== $m link ===${RESET}"
+        "$DOT_ROOT/$m/commands/link.sh"
     done
 }
 
@@ -137,14 +121,14 @@ cmd_tools() {
             [ -z "$tool" ] && continue
 
             if command -v "$tool" >/dev/null 2>&1; then
-                mark="[x]"
+                mark="${GREEN}[x]${RESET}"
                 $only_missing && continue
             else
-                mark="[ ]"
+                mark="${RED}[ ]${RESET}"
             fi
 
             if ! $printed_header; then
-                echo "[$mod]"
+                echo "${BOLD}${BLUE}[$mod]${RESET}"
                 printed_header=true
             fi
             printf '  %s %-12s %s\n' "$mark" "$tool" "$desc"
@@ -167,7 +151,7 @@ run_module() {
     local sub="$1"; shift
     local script="$DOT_ROOT/$mod/commands/$sub.sh"
     if [ ! -x "$script" ]; then
-        echo "no such subcommand: $mod $sub" >&2
+        echo "${RED}no such subcommand: $mod $sub${RESET}" >&2
         echo >&2
         echo "available subcommands for $mod:" >&2
         print_subcommands "$mod" "  " >&2
@@ -183,14 +167,13 @@ cmd="${1:-help}"
 
 case "$cmd" in
     -h|--help|help) cmd_help ;;
-    list)           cmd_list "$@" ;;
-    all)            cmd_all "$@" ;;
+    link-all)       cmd_link_all "$@" ;;
     tools)          cmd_tools "$@" ;;
     *)
         if is_module "$cmd"; then
             run_module "$cmd" "$@"
         else
-            echo "unknown command/module: $cmd" >&2
+            echo "${RED}unknown command/module: $cmd${RESET}" >&2
             echo >&2
             cmd_help >&2
             exit 1

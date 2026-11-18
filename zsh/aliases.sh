@@ -13,11 +13,11 @@ alias grep='grep --color=auto'
 alias make='make -k'
 
 # ----- ls family -----
-# prefer exa when available, fall back to plain ls otherwise
-if command -v exa >/dev/null; then
-    alias ls='exa -F --group-directories-first --git'
-    alias ll='exa -F --group-directories-first -l --git'
-    alias la='exa -F --color=auto --group-directories-first -a'
+# prefer eza (maintained fork of exa) when available, fall back to plain ls otherwise
+if command -v eza >/dev/null; then
+    alias ls='eza -F --group-directories-first --git'
+    alias ll='eza -F --group-directories-first -l --git'
+    alias la='eza -F --color=auto --group-directories-first -a'
 else
     alias ls='ls --color=auto'
     alias ll='ls -alF --color=auto'

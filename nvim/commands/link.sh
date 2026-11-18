@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # desc: symlink a vim profile to ~/.vimrc and ~/.config/nvim/init.vim (pass profile name; no args lists profiles)
+# skip-in-link-all: needs a profile name
 set -eu
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 MOD_DIR="$(cd "$HERE/.." && pwd)"
