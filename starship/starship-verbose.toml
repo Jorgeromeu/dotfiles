@@ -1,0 +1,123 @@
+# Verbose prompt (Alt-i in zsh toggles it). A copy of starship.toml where:
+#   left:  same as minimal, plus exit-code meanings and the full path
+#   right: the details - git state/status/sync, lines changed, commit + tag,
+#          then Starship's standard info for containers and toolchains
+# Keep the shared parts in sync with starship.toml.
+add_newline = false
+format = """
+$status$python$conda$hostname\
+$git_branch${custom.worktree}$jobs$directory"""
+
+# Each module only shows when relevant (e.g. nodejs only in a Node project).
+# Ends with a dimmed "verbose" tag so the mode is always visible.
+# $python stays on the left, since a module can only have one format per file.
+right_format = """
+$cmd_duration\
+$git_state$git_status$git_metrics$git_commit\
+$container$docker_context$nix_shell\
+$nodejs$rust$golang$haskell$ocaml$lua$java$c\
+[verbose](dimmed)"""
+
+[cmd_duration]
+min_time = 3_000
+format = "[took $duration]($style) "
+style = "dimmed white"
+
+# e.g. "1 ERROR", "130 INT", "127 NOTFOUND"; pipelines: "0|141 PIPE".
+[status]
+disabled = false
+format = "[$status( $common_meaning)( $signal_name)]($style) "
+pipestatus = true
+pipestatus_separator = "|"
+pipestatus_segment_format = "$status"
+pipestatus_format = "[$pipestatus( $common_meaning)( $signal_name)]($style) "
+style = "bold red"
+
+# Only shown when a venv is active (no version, no auto-detection by files).
+[python]
+format = '[$virtualenv]($style) '
+style = "bold green"
+detect_extensions = []
+detect_files = []
+detect_folders = []
+
+[conda]
+format = '[$environment]($style) '
+style = "bold green"
+
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) "
+style = "bold magenta"
+
+[git_branch]
+format = "[⎇ $branch]($style) "
+style = "bold yellow"
+
+# Commit hash always, plus the tag if one points at HEAD: "f8ac616 #v1.2".
+[git_commit]
+only_detached = false
+tag_disabled = false
+tag_symbol = " #"
+format = "[$hash$tag]($style) "
+style = "yellow"
+
+# In-progress operation: REBASING 2/5, MERGING, CHERRY-PICKING, BISECTING...
+[git_state]
+format = "[$state( $progress_current/$progress_total)]($style) "
+style = "bold red"
+
+# Space-separated markers with counts:
+#   *3 modified  +1 staged  ?2 untracked  ✘1 deleted  »1 renamed  ~1 type changed
+#   =1 conflicts  ≡1 stashes
+# then, in yellow: ⇡2 ahead / ⇣1 behind the remote, ✓ in sync with it.
+[git_status]
+format = "([$all_status]($style))([$ahead_behind](bold yellow) )"
+style = "bold red"
+modified = "*${count} "
+staged = "+${count} "
+untracked = "?${count} "
+deleted = "✘${count} "
+renamed = "»${count} "
+typechanged = "~${count} "
+conflicted = "=${count} "
+stashed = "≡${count} "
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇡${ahead_count} ⇣${behind_count}"
+up_to_date = "✓"
+
+# Background jobs (e.g. a suspended vim), shown as ✦ with the count.
+[jobs]
+format = "[$symbol$number]($style) "
+symbol = "✦"
+number_threshold = 1
+style = "bold cyan"
+
+# Linked worktree: "wt:<main repo>" (worktree dirs are often uninformative names).
+# Portable git (no --path-format, which needs git >= 2.31).
+[custom.worktree]
+require_repo = true
+shell = ["sh"]
+when = 'test "$(cd "$(git rev-parse --git-dir)" && pwd -P)" != "$(cd "$(git rev-parse --git-common-dir)" && pwd -P)"'
+command = 'basename "$(dirname "$(cd "$(git rev-parse --git-common-dir)" && pwd -P)")"'
+format = "[wt:$output]($style) "
+style = "bold cyan"
+
+# Path: like the minimal config, but the part above the repo isn't abbreviated.
+[directory]
+truncation_length = 0
+fish_style_pwd_dir_length = 100   # >0 keeps the part above the repo; 100 = no abbreviation
+truncate_to_repo = true
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold blue"
+read_only = " ro"
+read_only_style = "dimmed"
+repo_root_style = "bold blue"
+before_repo_root_style = "dimmed"
+repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root$path]($repo_root_style)[$read_only]($read_only_style) "
+
+[git_metrics]
+disabled = false
+format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+

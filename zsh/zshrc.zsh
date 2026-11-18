@@ -1,71 +1,36 @@
-# Simple prompt with git info
-# ===========================
-autoload -Uz vcs_info
-setopt prompt_subst
-zstyle ':vcs_info:git:*' formats '%B%F{yellow}⎇ %b%f'
-zstyle ':vcs_info:*' enable git
-
-# Let build_prompt own the env segment instead of the tools munging PROMPT
-# themselves (build_prompt rebuilds PROMPT every prompt and would clobber it).
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-export CONDA_CHANGEPS1=false
-
-# Name of the active dev environment (python venv, conda, etc.), or empty.
-prompt_env_name() {
-  if [[ -n $VIRTUAL_ENV ]]; then
-    # ${VIRTUAL_ENV:t} is just the venv folder name, which is usually the
-    # uninformative ".venv"/"venv". Prefer the prompt label recorded in
-    # pyvenv.cfg (set via `python -m venv --prompt` or uv), then fall back to
-    # the parent directory name when the folder itself is generic.
-    local name="${VIRTUAL_ENV:t}"
-    local cfg="$VIRTUAL_ENV/pyvenv.cfg"
-    local label
-    if [[ -r $cfg ]]; then
-      label="${${(M)${(f)$(<$cfg)}:#prompt =*}#prompt = }"
-    fi
-    if [[ -n $label ]]; then
-      echo "$label"
-    elif [[ $name == (.venv|venv|.env|env|virtualenv|.virtualenv) ]]; then
-      echo "${VIRTUAL_ENV:h:t}"                               # parent dir name
-    else
-      echo "$name"
-    fi
-  elif [[ -n $CONDA_DEFAULT_ENV ]]; then
-    echo "${CONDA_DEFAULT_ENV:t}"                             # conda / mamba
-  fi
-}
-
 # utf8
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
-# Working dir relative to the git repo: "repo/sub/dir", or "repo:worktree/sub/dir"
-# inside a linked worktree. Falls back to the plain path outside a repo.
-prompt_dir() {
-  local top common
-  top=$(git rev-parse --show-toplevel 2>/dev/null) || { print -rn -- "%5~"; return }
-  common=$(git rev-parse --path-format=absolute --git-common-dir)
-  local label=${common:h:t}                        # main checkout's dir name
-  [[ $top != ${common:h} ]] && label+=":${top:t}"  # linked worktree's name
-  print -rn -- "${label}${${PWD:A}#$top}"
-}
+# Prompt
+# ======
+# Starship if installed (config: ~/dotfiles/starship); otherwise a plain zsh fallback.
+if command -v starship >/dev/null; then
+  export VIRTUAL_ENV_DISABLE_PROMPT=1   # starship shows the venv itself
+  export CONDA_CHANGEPS1=false
+  eval "$(starship init zsh)"
 
-# Build the prompt from only the non-empty segments, joined with a single
-# space. ${(j: :)parts} guarantees exactly one space between parts and no
-# leading/trailing space; the explicit trailing space is added after.
-build_prompt() {
-  local exit_code=$?
-  vcs_info
-  local -a parts
-  local env_name="$(prompt_env_name)"
-  (( exit_code ))             && parts+="%B%F{red}${exit_code}%f%b"   # exit code
-  [[ -n $env_name ]]          && parts+="%B%F{green}(${env_name})%f%b"  # dev env (venv/conda)
-  [[ -n $SSH_CONNECTION ]]    && parts+="%B%F{magenta}%m%f%b"         # hostname (SSH only)
-  [[ -n $vcs_info_msg_0_ ]]   && parts+="$vcs_info_msg_0_"            # git branch
-  parts+="%B%F{blue}$(prompt_dir)%f%b"                                # working dir
-  PROMPT="${(j: :)parts} "
-}
-precmd_functions+=( build_prompt )
+  # Alt-i toggles the verbose config (default: ~/.config/starship.toml).
+  prompt-verbose() {
+    if [[ -n $STARSHIP_CONFIG ]]; then
+      unset STARSHIP_CONFIG
+    else
+      export STARSHIP_CONFIG=~/.config/starship-verbose.toml
+    fi
+    zle reset-prompt
+  }
+  zle -N prompt-verbose
+  bindkey -M viins '^[i' prompt-verbose
+  bindkey -M vicmd '^[i' prompt-verbose
+else
+  # [exit code] [⎇ branch] ~/path
+  autoload -Uz vcs_info
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git:*' formats '%B%F{yellow}⎇ %b%f '
+  precmd_functions+=( vcs_info )
+  setopt prompt_subst
+  PROMPT='%(?..%B%F{red}%?%f%b )${vcs_info_msg_0_}%B%F{blue}%5~%f%b '
+fi
 
 
 # Vim bindings
@@ -168,23 +133,3 @@ uvactivate() {
   source $bin/activate
   print "activated $VIRTUAL_ENV"
 }
-
-# Worktrees
-# =========
-# `wtcd <name>` cds into one of ~/research's Claude worktrees, or `wtcd research`
-# into the main checkout; tab-completes the names with each one's branch and path alongside.
-wtcd() {
-  (( $# )) || { echo "usage: wtcd <worktree>" >&2; git -C ~/research worktree list >&2; return 1 }
-  if [[ $1 == research ]]; then cd ~/research; else cd ~/research/.claude/worktrees/$1; fi
-}
-_wtcd() {
-  local -a names branches dirs items
-  local dir sha branch i
-  git -C ~/research worktree list | while read -r dir sha branch; do
-    names+=${dir:t}; branches+=${branch//[\[\]]/}; dirs+=${(D)dir}
-  done
-  local w=${#${(O@)branches//?/X}[1]}  # longest branch, to align the path column
-  for i in {1..$#names}; do items+=("${names[i]}:${(r:w:)branches[i]}  ${dirs[i]}"); done
-  _describe worktree items
-}
-compdef _wtcd wtcd
