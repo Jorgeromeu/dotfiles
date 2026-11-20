@@ -133,3 +133,45 @@ uvactivate() {
   source $bin/activate
   print "activated $VIRTUAL_ENV"
 }
+
+# Worktrees
+# =========
+# `wtcd <name>` cds into a worktree of the current repo by its directory name
+# (the main checkout goes by the repo's name); tab-completes the names with each
+# one's branch and path alongside.
+
+# One "name<TAB>branch<TAB>path" line per worktree of the current repo.
+_wt_list() {
+  local line dir branch
+  git worktree list --porcelain 2>/dev/null | while read -r line; do
+    case $line in
+      worktree\ *) dir=${line#worktree } ;;
+      branch\ *)   branch=${line#branch refs/heads/} ;;
+      detached)    branch='(detached)' ;;
+      bare)        branch='(bare)' ;;
+      '')          print -r -- "${dir:t}"$'\t'"$branch"$'\t'"$dir"; branch= ;;
+    esac
+  done
+}
+wtcd() {
+  git rev-parse --git-dir >/dev/null 2>&1 || { print -u2 "wtcd: not in a git repo"; return 1 }
+  (( $# )) || { print -u2 "usage: wtcd <worktree>"; git worktree list >&2; return 1 }
+  local name branch dir
+  while IFS=$'\t' read -r name branch dir; do
+    [[ $name == $1 ]] && { cd -- $dir; return }
+  done < <(_wt_list)
+  print -u2 "wtcd: no worktree '$1' in this repo"; return 1
+}
+_wtcd() {
+  (( CURRENT == 2 )) || return 1  # wtcd takes a single worktree name
+  local -a names branches dirs items
+  local name branch dir i
+  while IFS=$'\t' read -r name branch dir; do
+    names+=$name; branches+=$branch; dirs+=${(D)dir}
+  done < <(_wt_list)
+  (( $#names )) || return 1
+  local w=${#${(O@)branches//?/X}[1]}  # longest branch, to align the path column
+  for i in {1..$#names}; do items+=("${names[i]}:${(r:w:)branches[i]}  ${dirs[i]}"); done
+  _describe worktree items
+}
+compdef _wtcd wtcd
