@@ -89,3 +89,9 @@ auto_switch = false
 panel_bg = "reset"
 # no background behind inactive tabs (tmux-like)
 surface0    = "reset"
+
+[terminal]
+default_shell = "/usr/bin/zsh"
+
+[experimental]
+kitty_graphics = true
