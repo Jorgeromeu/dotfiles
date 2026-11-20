@@ -35,7 +35,7 @@ style = "bold green"
 [hostname]
 ssh_only = true
 format = "[$hostname]($style) "
-style = "bold magenta"
+style = "bold purple"
 
 [git_branch]
 format = "[⎇ $branch]($style) "
