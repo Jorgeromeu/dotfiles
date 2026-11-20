@@ -1,2 +1,4 @@
 # Claude Code per-machine permissions
 .claude/settings.local.json
+# Editor-local settings
+.vscode/

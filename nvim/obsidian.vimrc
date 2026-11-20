@@ -1,7 +1,8 @@
 " ==================
 " Obsidian vimrc
 " ==================
-" the obsidan vim format is kinda wonky so i just made a file
+" For the Obsidian Vimrc Support plugin: copy into a vault as .obsidian.vimrc.
+" Not a vim profile (Obsidian only understands a subset of vimscript).
 
 imap jj <Esc>
 

@@ -1,0 +1,7 @@
+description = "Alacritty terminal: Nord colors, font, padding"
+
+[links]
+"~/.config/alacritty/alacritty.toml" = "alacritty.toml"
+
+[deps]
+alacritty = "GPU-accelerated terminal emulator"

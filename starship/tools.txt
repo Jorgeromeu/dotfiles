@@ -1,3 +1,0 @@
-# Tools used by the starship module.
-# Format: <tool>  <description>
-starship   cross-shell prompt (zsh falls back to a plain prompt without it)

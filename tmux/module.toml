@@ -1,0 +1,7 @@
+description = "tmux: keybindings, status bar, per-host accent color"
+
+[links]
+"~/.tmux.conf" = "main.tmux"   # sources ~/.tmux.local.conf (per host, see `setcolor`)
+
+[deps]
+tmux = "terminal multiplexer"

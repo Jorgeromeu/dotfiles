@@ -1,0 +1,7 @@
+description = "pacman config for Arch hosts (system path: link prints the sudo commands)"
+
+[links]
+"/etc/pacman.conf" = "pacman.conf"
+
+[deps]
+pacman = "Arch Linux package manager; only relevant on Arch hosts"

@@ -4,7 +4,7 @@ LC_ALL=en_US.UTF-8
 
 # Prompt
 # ======
-# Starship if installed (config: ~/dotfiles/starship); otherwise a plain zsh fallback.
+# Starship if installed (config: the starship module); otherwise a plain zsh fallback.
 if command -v starship >/dev/null; then
   export VIRTUAL_ENV_DISABLE_PROMPT=1   # starship shows the venv itself
   export CONDA_CHANGEPS1=false
@@ -48,7 +48,7 @@ HISTFILE=~/.zshhistory
 
 # Aliases
 # =======
-source ~/dotfiles/zsh/aliases.sh
+source ${${(%):-%x}:A:h}/aliases.sh   # next to this file's real path, wherever the repo is
 
 # Fancy tab complete
 # ============

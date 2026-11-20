@@ -1,0 +1,9 @@
+description = "Vim/Neovim: one shared entry point that loads this host's profile (see `use`)"
+
+[links]
+"~/.config/nvim/init.vim" = "init.vim"
+"~/.vimrc"                = "init.vim"
+
+[deps]
+nvim = "Neovim; reads ~/.config/nvim/init.vim"
+vim  = "Vim; reads ~/.vimrc (same profile)"

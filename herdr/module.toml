@@ -1,0 +1,10 @@
+description = "herdr workspace manager: config plus the helper scripts its keybindings run"
+
+[links]
+"~/.config/herdr/config.toml"     = "config.toml"
+"~/.config/herdr/agent-view.sh"   = "agent-view.sh"
+"~/.config/herdr/sidebar-mode.sh" = "sidebar-mode.sh"
+
+[deps]
+herdr   = "terminal workspace manager for AI coding agents"
+python3 = "agent-view.sh uses it to talk to herdr's socket"

@@ -1,0 +1,12 @@
+description = "Z shell: vi mode, history, completion, aliases, prompt glue"
+
+[links]
+"~/.zshrc" = "zshrc.zsh"     # aliases.sh is sourced from the repo, not linked
+
+[deps]
+zsh     = "the shell itself"
+fzf     = "fuzzy finder; zshrc binds Ctrl-R (history), Ctrl-T (files), Alt-C (cd)"
+zoxide  = "smarter cd; zshrc enables `z <part of a dir name>` to jump to frequent dirs"
+uv      = "Python project manager; zshrc's `uvactivate` activates the project's venv"
+eza     = "modern ls; aliases.sh points ls/ll/la at it when installed"
+ipython = "better Python REPL; aliases.sh adds `ipy` for it"

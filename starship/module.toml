@@ -1,0 +1,8 @@
+description = "Prompt: minimal by default, Alt-i in zsh toggles the verbose one"
+
+[links]
+"~/.config/starship.toml"         = "starship.toml"           # starship's default path
+"~/.config/starship-verbose.toml" = "starship-verbose.toml"   # used via STARSHIP_CONFIG
+
+[deps]
+starship = "cross-shell prompt; zshrc runs `starship init` when it's installed, else a plain prompt"

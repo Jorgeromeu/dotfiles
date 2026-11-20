@@ -6,7 +6,7 @@
 " vanilla vim
 
 " General Settings
-so ~/dotfiles/nvim/common.vim
+execute 'source' fnameescape(fnamemodify(resolve(expand('<sfile>:p')), ':h') . '/common.vim')
 
 colo industry
 set foldmethod=syntax
