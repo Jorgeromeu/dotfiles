@@ -5,7 +5,7 @@ description = "Z shell: vi mode, history, completion, aliases, prompt glue"
 
 [deps]
 zsh     = "the shell itself"
-fzf     = "fuzzy finder; zshrc binds Ctrl-R (history), Ctrl-T (files), Alt-C (cd)"
+fzf     = "fuzzy finder; zshrc binds Ctrl-R (history), Ctrl-T (files), Alt-C (cd) and `wt` picks a worktree with it"
 zoxide  = "smarter cd; zshrc enables `z <part of a dir name>` to jump to frequent dirs"
 uv      = "Python project manager; zshrc's `uvactivate` activates the project's venv"
 eza     = "modern ls; aliases.sh points ls/ll/la at it when installed"

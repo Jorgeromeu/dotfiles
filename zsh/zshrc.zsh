@@ -134,44 +134,37 @@ uvactivate() {
   print "activated $VIRTUAL_ENV"
 }
 
-# Worktrees
-# =========
-# `wtcd <name>` cds into a worktree of the current repo by its directory name
-# (the main checkout goes by the repo's name); tab-completes the names with each
-# one's branch and path alongside.
-
-# One "name<TAB>branch<TAB>path" line per worktree of the current repo.
-_wt_list() {
-  local line dir branch
-  git worktree list --porcelain 2>/dev/null | while read -r line; do
-    case $line in
-      worktree\ *) dir=${line#worktree } ;;
-      branch\ *)   branch=${line#branch refs/heads/} ;;
-      detached)    branch='(detached)' ;;
-      bare)        branch='(bare)' ;;
-      '')          print -r -- "${dir:t}"$'\t'"$branch"$'\t'"$dir"; branch= ;;
-    esac
-  done
+# wt (jump to another git worktree of this repo, keeping the subdir if it exists there)
+#   wt           pick one with fzf (without fzf: list them)
+#   wt <name>    by worktree dir name or branch (Tab completes both)
+_wt_list() {   # one line per worktree: "<dir name>\t<branch>\t<path>"
+  git worktree list --porcelain 2>/dev/null | awk '
+    function out() { n = p; sub(/.*\//, "", n); print n "\t" b "\t" p }
+    /^worktree / { if (p != "") out(); p = substr($0, 10); b = "" }
+    /^branch /   { b = substr($0, 19) }
+    /^detached/  { b = "(detached)" }
+    /^bare/      { p = "" }
+    END          { if (p != "") out() }'
 }
-wtcd() {
-  git rev-parse --git-dir >/dev/null 2>&1 || { print -u2 "wtcd: not in a git repo"; return 1 }
-  (( $# )) || { print -u2 "usage: wtcd <worktree>"; git worktree list >&2; return 1 }
-  local name branch dir
-  while IFS=$'\t' read -r name branch dir; do
-    [[ $name == $1 ]] && { cd -- $dir; return }
-  done < <(_wt_list)
-  print -u2 "wtcd: no worktree '$1' in this repo"; return 1
+wt() {
+  local list dir prefix
+  list=$(_wt_list)
+  [[ -n $list ]] || { print -u2 "wt: not in a git repo"; return 1 }
+  if (( $# )); then
+    dir=$(print -r -- $list | awk -F'\t' -v q="$1" '$1 == q || $2 == q { print $3; exit }')
+    [[ -n $dir ]] || { print -u2 "wt: no worktree named '$1'"; return 1 }
+  elif command -v fzf >/dev/null; then
+    # colored like the prompt: main checkout (always listed first) blue + "main", worktrees cyan
+    dir=$(print -r -- $list | awk -F'\t' '
+        NR == 1 { printf "\033[1;34m%s\033[0m\t%s \033[2mmain\033[0m\t%s\n", $1, $2, $3; next }
+                { printf "\033[1;36m%s\033[0m\t%s\t%s\n", $1, $2, $3 }' |
+      fzf --ansi --delimiter='\t' --with-nth=1,2 --height=40% --reverse | cut -f3)
+    [[ -n $dir ]] || return
+  else
+    print -r -- $list | cut -f1,2; return
+  fi
+  prefix=$(git rev-parse --show-prefix)
+  if [[ -d $dir/$prefix ]]; then cd "$dir/$prefix"; else cd "$dir"; fi
 }
-_wtcd() {
-  (( CURRENT == 2 )) || return 1  # wtcd takes a single worktree name
-  local -a names branches dirs items
-  local name branch dir i
-  while IFS=$'\t' read -r name branch dir; do
-    names+=$name; branches+=$branch; dirs+=${(D)dir}
-  done < <(_wt_list)
-  (( $#names )) || return 1
-  local w=${#${(O@)branches//?/X}[1]}  # longest branch, to align the path column
-  for i in {1..$#names}; do items+=("${names[i]}:${(r:w:)branches[i]}  ${dirs[i]}"); done
-  _describe worktree items
-}
-compdef _wtcd wtcd
+_wt() { compadd -- ${(f)"$(_wt_list | cut -f1,2 | tr '\t' '\n' | grep -v '^(detached)$' | sort -u)"} }
+compdef _wt wt
