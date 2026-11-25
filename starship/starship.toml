@@ -1,11 +1,11 @@
 # Minimal prompt, one line:
-#   [exit code] [venv] [host over ssh] [⎇ branch] [wt:repo] [✦1] repo/subdir      [took 5s]
+#   [exit code] [venv] [host over ssh] [⎇ branch] [✦1] repo[ wt:worktree]/subdir      [took 5s]
 # Only the modules listed in `format` are shown; everything else is off.
 add_newline = false
 format = """
 $status$python$conda$hostname\
 $git_branch$git_commit\
-${custom.worktree}$jobs$directory"""
+$jobs${custom.repo}${custom.worktree}$directory"""
 
 # Right side: how long the last command took, only if it was slow.
 right_format = "$cmd_duration"
@@ -38,6 +38,7 @@ format = "[$hostname]($style) "
 style = "bold purple"
 
 [git_branch]
+only_attached = true
 format = "[⎇ $branch]($style) "
 style = "bold yellow"
 
@@ -53,18 +54,28 @@ symbol = "✦"
 number_threshold = 1
 style = "bold cyan"
 
-# Linked worktree: "wt:<main repo>" (worktree dirs are often uninformative names).
+# In a repo the path is "repo[ wt:worktree]/subdir": custom.repo prints the
+# main repo's name (even from a linked worktree, whose dir name is often
+# uninformative), custom.worktree adds the worktree's name, $directory the subdir.
 # Portable git (no --path-format, which needs git >= 2.31).
+[custom.repo]
+require_repo = true
+shell = ["sh"]
+when = "true"
+command = 'basename "$(dirname "$(cd "$(git rev-parse --git-common-dir)" && pwd -P)")"'
+format = "[$output]($style)"
+style = "bold blue"
+
 [custom.worktree]
 require_repo = true
 shell = ["sh"]
 when = 'test "$(cd "$(git rev-parse --git-dir)" && pwd -P)" != "$(cd "$(git rev-parse --git-common-dir)" && pwd -P)"'
-command = 'basename "$(dirname "$(cd "$(git rev-parse --git-common-dir)" && pwd -P)")"'
-format = "[wt:$output]($style) "
+command = 'basename "$(git rev-parse --show-toplevel)"'
+format = " [wt:$output]($style)"
 style = "bold cyan"
 
-# Path: in a repo, just repo/subdir (the full path is in the verbose prompt).
-# Outside a repo, the full path.
+# Path: outside a repo, the full path. In a repo, just the subdir: repo_root_format
+# drops the repo root, which custom.repo/custom.worktree replace.
 [directory]
 truncation_length = 0
 truncate_to_repo = true
@@ -72,3 +83,5 @@ format = "[$path]($style)[$read_only]($read_only_style) "
 style = "bold blue"
 read_only = " ro"
 read_only_style = "dimmed"
+repo_root_style = "bold blue"
+repo_root_format = "[$path]($style)[$read_only]($read_only_style) "
