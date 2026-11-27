@@ -84,7 +84,9 @@ Out of scope: Windows-side configs on WSL (Windows programs don't follow WSL sym
 ## Notes per module
 
 - **zsh**: `zshrc.zsh` plus `aliases.sh`. Uses starship for the prompt when
-  installed, else a plain built-in prompt.
+  installed, else a plain built-in prompt. `shorthost <name>` sets this
+  machine's name in the minimal prompt over ssh (stored per machine in
+  `~/.config/shorthost`, not in the repo).
 - **starship**: minimal `starship.toml` and `starship-verbose.toml`; Alt-i in zsh
   toggles by setting `STARSHIP_CONFIG`. Starship configs can't include each other,
   so the verbose file is a full copy: keep shared sections in sync.

@@ -22,6 +22,14 @@ if command -v starship >/dev/null; then
   zle -N prompt-verbose
   bindkey -M viins '^[i' prompt-verbose
   bindkey -M vicmd '^[i' prompt-verbose
+
+  # shorthost [name]: this machine's name in the minimal prompt over ssh (the
+  # verbose one shows the full hostname). Kept in ~/.config/shorthost, per
+  # machine, outside the repo. No name: back to the hostname.
+  shorthost() {
+    if (( $# )); then mkdir -p ~/.config && print -r -- $1 > ~/.config/shorthost
+    else rm -f ~/.config/shorthost; fi
+  }
 else
   # [exit code] [⎇ branch] ~/path
   autoload -Uz vcs_info
