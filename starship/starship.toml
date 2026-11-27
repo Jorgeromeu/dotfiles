@@ -1,11 +1,11 @@
 # Minimal prompt, one line:
-#   [exit code] [venv] [host over ssh] [⎇ branch] [✦1] repo[ wt:worktree]/subdir      [took 5s]
+#   [exit code] [venv] [host over ssh] [✦1] repo/subdir [wt] [⎇ branch]      [took 5s]
 # Only the modules listed in `format` are shown; everything else is off.
 add_newline = false
 format = """
-$status$python$conda$hostname\
-$git_branch$git_commit\
-$jobs${custom.repo}${custom.worktree}$directory"""
+$status$python$conda${custom.host}$jobs\
+${custom.repo}$directory${custom.worktree}\
+$git_branch$git_commit"""
 
 # Right side: how long the last command took, only if it was slow.
 right_format = "$cmd_duration"
@@ -20,7 +20,9 @@ disabled = false
 format = "[$status]($style) "
 style = "bold red"
 
-# Only shown when a venv is active (no version, no auto-detection by files).
+# Active Python venv / conda env, by name (a uv venv is named after its
+# project). The verbose prompt adds "venv:" / "conda:". No version, no
+# auto-detection by files.
 [python]
 format = '[$virtualenv]($style) '
 style = "bold green"
@@ -32,14 +34,21 @@ detect_folders = []
 format = '[$environment]($style) '
 style = "bold green"
 
-[hostname]
-ssh_only = true
-format = "[$hostname]($style) "
+# Over ssh: this machine's short name, set with zsh's `shorthost <name>` (kept
+# in ~/.config/shorthost, per machine, not in the repo), else the hostname.
+# The verbose prompt shows the full hostname instead.
+[custom.host]
+when = 'test -n "$SSH_CONNECTION"'
+shell = ["sh"]
+command = 'cat ~/.config/shorthost 2>/dev/null || hostname -s'
+format = "[$output]($style) "
 style = "bold purple"
 
 [git_branch]
 only_attached = true
 format = "[⎇ $branch]($style) "
+truncation_length = 20
+truncation_symbol = "…"
 style = "bold yellow"
 
 # Commit hash, only on a detached HEAD (where there's no branch to show).
@@ -54,9 +63,9 @@ symbol = "✦"
 number_threshold = 1
 style = "bold cyan"
 
-# In a repo the path is "repo[ wt:worktree]/subdir": custom.repo prints the
-# main repo's name (even from a linked worktree, whose dir name is often
-# uninformative), custom.worktree adds the worktree's name, $directory the subdir.
+# In a repo the path is "repo/subdir": custom.repo prints the main repo's name
+# (even from a linked worktree, whose dir name is often uninformative),
+# $directory adds the subdir. After it, custom.worktree marks a linked worktree.
 # Portable git (no --path-format, which needs git >= 2.31).
 [custom.repo]
 require_repo = true
@@ -70,8 +79,10 @@ style = "bold blue"
 require_repo = true
 shell = ["sh"]
 when = 'test "$(cd "$(git rev-parse --git-dir)" && pwd -P)" != "$(cd "$(git rev-parse --git-common-dir)" && pwd -P)"'
-command = 'basename "$(git rev-parse --show-toplevel)"'
-format = " [wt:$output]($style)"
+# Just the marker: the branch already identifies the worktree (git allows a
+# branch in only one), and the verbose prompt names it.
+command = "true"
+format = "[wt]($style) "
 style = "bold cyan"
 
 # Path: outside a repo, the full path. In a repo, just the subdir: repo_root_format
@@ -84,4 +95,5 @@ style = "bold blue"
 read_only = " ro"
 read_only_style = "dimmed"
 repo_root_style = "bold blue"
-repo_root_format = "[$path]($style)[$read_only]($read_only_style) "
+# Subdir in plain (not bold) blue, so the bold repo name before it stands out.
+repo_root_format = "[$path](blue)[$read_only]($read_only_style) "
